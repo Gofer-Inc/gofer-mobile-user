@@ -1,5 +1,7 @@
 {
-  "name": "gofer-mobile",
-  "integrations": {},
+  "name": "Gofer",
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "vue"
 }
