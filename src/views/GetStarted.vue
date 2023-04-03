@@ -58,7 +58,7 @@
       :isOpen="isOpen"
       type="sheet"
       :backdropDismiss="false"
-      :breakPoints="1"
+      :breakPoints="[0, 0.25, 0.5, 0.7, 0.9, 1]"
       :initialBreakpoint="0.25"
       :canDismiss="canDismiss"
     >

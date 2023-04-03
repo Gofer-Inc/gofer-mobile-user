@@ -128,6 +128,8 @@ onMounted(() => {
 const buttonPadding = computed(() => {
   if (props.size == "default") {
     return `24px`;
+  } else if (props.size == "medium") {
+    return "18px";
   } else {
     return "15px";
   }

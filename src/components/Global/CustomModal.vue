@@ -6,7 +6,7 @@
       noBackDrop ? 'noBackDrop' : ''
     } `"
     :initial-breakpoint="initialBreakpoint"
-    :breakpoints="!breakPoints ? [initialBreakpoint] : displayBreakPoints"
+    :breakpoints="breakPoints"
     @ionModalDidDismiss="$emit('close')"
     :backdrop-dismiss="backdropDismiss"
     :backdrop-breakpoint="Number(backdropBreakpoint)"
@@ -70,9 +70,8 @@
 <script setup>
 import { IonModal, IonIcon } from "@ionic/vue";
 import { close } from "ionicons/icons";
-import { computed } from "vue";
 
-const props = defineProps({
+defineProps({
   spacing: {
     type: Boolean,
     default: true,
@@ -123,23 +122,9 @@ const props = defineProps({
     default: 0.5,
   },
   breakPoints: {
-    type: [Number, Boolean],
-    default: false,
+    type: Array,
+    default: () => [0, 0.25, 0.5, 0.75],
   },
-});
-
-const displayBreakPoints = computed(() => {
-  let arr = [];
-  let start = 0;
-  let endPoint = props.breakPoints
-    ? props.breakPoints
-    : props.initialBreakpoint;
-  for (start; start <= parseFloat(endPoint); ) {
-    arr.push(start);
-    start += 0.25;
-  }
-
-  return arr;
 });
 
 defineEmits(["close"]);

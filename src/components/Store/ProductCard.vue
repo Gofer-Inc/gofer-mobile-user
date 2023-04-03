@@ -1,5 +1,5 @@
 <template>
-  <div class="flex text-left items-center gap-4">
+  <div class="flex w-full text-left items-center gap-4">
     <div>
       <div
         class="w-24 h-24 border-2 border-primary-light rounded-2xl overflow-hidden"
