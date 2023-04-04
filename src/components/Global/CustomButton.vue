@@ -156,6 +156,6 @@ ion-button.custom {
   --padding-end: 15px;
   --border-width: 1px;
   --border-radius: v-bind(buttonRadius);
-  text-transform: none !important;
+  /* text-transform: none !important; */
 }
 </style>

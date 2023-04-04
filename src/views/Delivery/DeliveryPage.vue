@@ -44,6 +44,9 @@
       </div>
     </ion-header>
     <ion-content fullscreen class="ion-padding">
+      <ion-refresher slot="fixed" @ionRefresh="reload($event)">
+        <ion-refresher-content></ion-refresher-content>
+      </ion-refresher>
       <hr class="mb-2" />
       <div class="flex flex-col gap-6">
         <div>
@@ -57,6 +60,18 @@
           </div>
         </div>
       </div>
+
+      <ion-fab
+        mode="ios"
+        slot="fixed"
+        vertical="bottom"
+        horizontal="end"
+        class="m-2"
+      >
+        <ion-fab-button @click="$router.push({ name: 'CreateOrder' })">
+          <ion-icon :icon="add"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
     </ion-content>
   </ion-page>
 </template>
@@ -66,11 +81,15 @@ import {
   IonPage,
   IonHeader,
   IonContent,
+  IonFab,
+  IonFabButton,
   IonButtons,
   IonButton,
   IonIcon,
+  IonRefresher,
+  IonRefresherContent,
 } from "@ionic/vue";
-import { chevronBack, notifications } from "ionicons/icons";
+import { chevronBack, notifications, add } from "ionicons/icons";
 
 import PackageCard from "@/components/Delivery/PackageCard.vue";
 import { computed } from "vue";
@@ -79,4 +98,8 @@ import packagesDB from "@/utils/packages.js";
 
 const packages = computed(() => packagesDB);
 console.log(packages.value);
+
+const reload = async (event) => {
+  setTimeout(() => event.target.complete(), 500);
+};
 </script>

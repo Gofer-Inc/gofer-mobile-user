@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 // import TabsPage from '../views/TabsPage.vue'
 import StoreLayout from '../layout/StoreLayout.vue'
-import DeliveryLayout from '../layout/StoreLayout.vue'
+// import DeliveryLayout from '../layout/StoreLayout.vue'
 
 const routes = [
   {
@@ -47,15 +47,15 @@ const routes = [
   },
   {
     path: '/delivery',
-    component: DeliveryLayout,
-    children: [
-      {
-        path: '',
-        name:'Delivery',
-        component: () => import('@/views/Delivery/DeliveryPage.vue')
-      },
-    ]
+    name:'Delivery',
+    component: () => import('@/views/Delivery/DeliveryPage.vue')
   },
+  {
+    path: '/create-order',
+    name:'CreateOrder',
+    component: () => import('@/views/Delivery/CreateOrder.vue')
+  },
+ 
 ]
 
 const router = createRouter({

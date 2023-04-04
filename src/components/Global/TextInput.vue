@@ -111,6 +111,7 @@
       <div class="w-full h-full relative">
         {{ label }}
         <span
+          v-if="inputFocus || modelValue"
           style="width: 110%; z-index: -2; margin-top: -4px"
           class="borderLine absolute top-1/2 -left-1 border-4 border-white"
         ></span>
@@ -275,9 +276,9 @@ export default {
           style = "left-9 -top-3 p-1 text-sm ";
         } else {
           if (String(props.modelValue).trim() === "") {
-            style = "left-9 top-1/2 transform -translate-y-1/2";
+            style = "left-11 top-1/2 transform -translate-y-1/2";
           } else {
-            style = "left-9 -top-3 p-1 text-sm ";
+            style = "left-11 -top-3 p-1 text-sm ";
           }
         }
       } else {

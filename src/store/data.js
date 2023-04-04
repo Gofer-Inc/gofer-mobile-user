@@ -4,10 +4,8 @@ import { defineStore } from "pinia";
 export const useDataStore = defineStore("main", {
   state: () => ({
     name: "Gofer",
-
     count: 0,
     isLoggedIn: false,
-    
   }),
 
   getters: {

@@ -1,12 +1,7 @@
 <template>
   <div class="relative" :class="error ? 'mb-4' : ''">
-    <ion-item ref="area">
-      <ion-label v-if="label" position="stacked" class="text-heading">{{
-        label
-      }}</ion-label>
+    <ion-item ref="area" class="area border">
       <ion-textarea
-        class="px-3 py-1"
-        :placeholder="placeholder"
         @ionBlur="markTouched"
         @ionFocus="inputFocus = true"
         @ionInput="$emit('update:modelValue', $event.target.value)"
@@ -18,6 +13,7 @@
         :maxlength="maxlength"
         :minlength="minlength"
         :spellcheck="spellcheck"
+        :placeholder="placeholder"
         :wrap="wrap"
         :cols="cols"
         :rows="rows"
@@ -29,6 +25,25 @@
       class="absolute text-xs font-medium text-error mt-1 left-2"
     >
       {{ error }}
+    </div>
+
+    <div
+      class="borderClassArea pointer-events-none absolute top-0 left-0 w-full h-full p-4 z-10"
+    ></div>
+
+    <div
+      v-if="label"
+      :class="labelStyle"
+      class="labelClassArea absolute z-10 pointer-events-none"
+    >
+      <div class="w-full h-full relative">
+        {{ label }}
+        <span
+          v-if="inputFocus || modelValue"
+          style="width: 110%; z-index: -2; margin-top: -4px"
+          class="borderLine absolute top-1/2 -left-1 border-4 border-white"
+        ></span>
+      </div>
     </div>
   </div>
 </template>
@@ -50,7 +65,7 @@ export default {
 
     placeholder: {
       type: String,
-      default: "Type something",
+      default: "",
     },
     inputmode: {
       type: String,
@@ -102,7 +117,7 @@ export default {
     },
     label: {
       type: [String, Boolean],
-      default: "Description",
+      default: "",
     },
   },
 
@@ -124,13 +139,42 @@ export default {
       } else {
         return inputFocus.value
           ? `var(--ion-color-${props.color})`
-          : `var(--ion-color-light-shade)`;
+          : `var(--ion-color-medium)`;
       }
+    });
+
+    const labelStyle = computed(() => {
+      let style;
+
+      if (props.appendIcon) {
+        if (inputFocus.value) {
+          style = "left-9 -top-3 p-1 text-sm ";
+        } else {
+          if (String(props.modelValue).trim() === "") {
+            style = "left-11 top-5 transform -translate-y-1/2";
+          } else {
+            style = "left-11 -top-3 p-1 text-sm ";
+          }
+        }
+      } else {
+        if (inputFocus.value) {
+          style = "left-4 -top-3 p-1 text-sm ";
+        } else {
+          if (String(props.modelValue).trim() === "") {
+            style = "left-4 top-5";
+          } else {
+            style = "left-4 -top-3 p-1 text-sm ";
+          }
+        }
+      }
+
+      return style;
     });
 
     return {
       colorName,
       inputFocus,
+      labelStyle,
     };
   },
   computed: {},
@@ -147,9 +191,23 @@ export default {
 </script>
 
 <style scope>
-ion-textarea {
+.labelClassArea {
+  transition: top, font-size, 0.1s ease-in-out;
+  /* background-color: var(--ion-color-white); */
+  color: v-bind(colorName);
+}
+
+.borderClassArea {
   border: 1.5px solid v-bind(colorName) !important;
-  border-radius: 12px !important;
+  border-radius: 16px !important;
+}
+
+ion-item.area {
+  /* padding: 0 !important; */
+  /* border: 1.5px solid v-bind(colorName) !important;
+  border-radius: 12px !important; */
+  border: none !important;
+  border-radius: 16px !important;
 }
 
 ion-textarea {
@@ -157,7 +215,7 @@ ion-textarea {
 }
 
 .item-has-focus {
-  /* --highlight-background: #ffffff; */
+  --highlight-background: #ffffff;
   --border-color: #ffffff;
 }
 </style>

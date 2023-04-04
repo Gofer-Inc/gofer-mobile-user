@@ -1,10 +1,5 @@
 <template>
-  <gModal
-    @close="$emit('close')"
-    :isOpen="isOpen"
-    type="full"
-    :showCloseButton="true"
-  >
+  <gModal @close="closeFN" :isOpen="isOpen" type="full" :showCloseButton="true">
     <ion-page>
       <ion-header mode="ios" class="ion-no-border">
         <gNav borderless :showBackButton="false" :title="title" class="mt-4">
@@ -16,18 +11,14 @@
       </ion-header>
       <ion-content fullscreen class="ion-padding">
         <div v-if="showCurrentLocation" class="mb-8">
-          <gButton
-            @click="$emit('close')"
-            fill="outline"
-            block
-            appendIcon="navigate"
+          <gButton @click="closeFN" fill="outline" block appendIcon="navigate"
             >User current location</gButton
           >
         </div>
 
         <div v-if="searchText" class="flex flex-col">
           <div
-            @click="$emit('close')"
+            @click="closeFN"
             v-for="(item, i) in 4"
             :key="i"
             class="ion-activatable relative overflow-hidden last:border-0 border-b border-dark-50"
@@ -83,9 +74,14 @@ defineProps({
   },
 });
 
-defineEmits(["close", "address"]);
+const emit = defineEmits(["close", "address"]);
 
 const searchText = ref("");
+
+const closeFN = () => {
+  emit("address", searchText.value);
+  emit("close");
+};
 </script>
 
 <style></style>

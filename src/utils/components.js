@@ -13,10 +13,12 @@ import FooterBar from "../components/Global/FooterBar";
 import CustomLoader from "../components/Global/CustomLoader";
 import PageTitle from "../components/Global/PageTitle";
 import AddressModal from "../components/Global/AddressModal";
+import FileInput from "../components/Global/FileInput";
 
 export const registerComponents = (app) => {
   app
     .component("gInput", TextInput)
+    .component("gFile", FileInput)
     .component("gSearch", SearchInput)
     .component("gButton", CustomButton)
     .component("gNav", NavBar)

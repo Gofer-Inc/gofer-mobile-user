@@ -8,11 +8,12 @@
       </div>
     </div>
     <div class="flex w-full flex-col gap-2 text-sm py-1">
-      <div class="flex justify-between">
-        <span class="text-gray-500 text-sm">{{
-          data && data.description
-        }}</span>
-        <div>
+      <div>
+        <div class="flex justify-between gap-1">
+          <span class="text-dark font-medium text-lg">
+            #{{ data && data.orderNo }}
+          </span>
+
           <span
             :class="`${getStatus(data && data.status).text} ${
               getStatus(data && data.status).border
@@ -21,11 +22,16 @@
             >{{ data && data.status }}
           </span>
         </div>
+
+        <div class="line-clamp-2">
+          <span class="text-gray-500">
+            {{ data && data.description }}
+          </span>
+        </div>
       </div>
       <div class="flex items-center justify-between">
         <div class="flex items-center gap-2 text-xs">
           <span class="text-gray-400">{{ data && data.createdAt }}</span>
-          <span class="text-dark font-font">#{{ data && data.orderNo }}</span>
         </div>
         <div class="text-sm text-primary font-medium">
           {{ formatAmount(data && data.totalCost) }}
