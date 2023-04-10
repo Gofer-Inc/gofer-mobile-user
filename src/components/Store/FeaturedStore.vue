@@ -20,13 +20,6 @@
 </template>
 
 <script setup>
-import "swiper/css";
-import "swiper/css/autoplay";
-import "swiper/css/pagination";
-import "swiper/css/navigation";
-import "swiper/css/scrollbar";
-import "@ionic/vue/css/ionic-swiper.css";
-
 import storeDB from "@/utils/stores.js";
 
 import { Autoplay, Keyboard, Pagination, Navigation, Scrollbar } from "swiper";

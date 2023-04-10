@@ -67,6 +67,11 @@ const props = defineProps({
     default: ["jpg"],
   },
 
+  hint: {
+    type: String,
+    default: ``,
+  },
+
   size: {
     type: [Number, String],
     default: 5000000,
@@ -83,7 +88,7 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["fileUrl"]);
+const emit = defineEmits(["fileUrl", "imgUrl"]);
 
 const { showToast } = helperFunctions;
 
@@ -108,6 +113,7 @@ const clearFiles = (index) => {
   uploadFiles.value = uploadFiles.value.filter((el, i) => i !== index);
 
   emit("fileUrl", uploadFiles.value);
+  emit("imgUrl", imageUrls.value);
 };
 
 function formatBytes(bytes, decimals = 2) {
@@ -213,6 +219,7 @@ function previewFiles(e) {
       };
       reader.readAsDataURL(file);
       emit("fileUrl", uploadFiles.value);
+      emit("imgUrl", imageUrls.value);
     } catch (e) {
       showToast(e.message);
     }

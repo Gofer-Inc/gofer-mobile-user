@@ -47,9 +47,23 @@
     showCloseButton
     closeButtonDark
     closeButtonDirection="left"
+    noHeader
     :spacing="false"
   >
-    <div class="w-full h-52">
+    <gNav empty color="transparent" />
+    <div class="w-full h-52 relative -mt-14">
+      <div
+        @click="showModal = false"
+        style=""
+        class="absolute top-2 right-2 bg-dark h-9 w-9 flex items-center justify-center rounded-full p-1 z-50"
+      >
+        <ion-icon
+          class="text-2xl text-white"
+          slot="icon-only"
+          :icon="close"
+        ></ion-icon>
+      </div>
+
       <img
         src="@/assets/images/food-2.png"
         alt=""
@@ -62,6 +76,7 @@
 
 <script setup>
 import { IonIcon, IonRippleEffect } from "@ionic/vue";
+import { close } from "ionicons/icons";
 
 import { add } from "ionicons/icons";
 import { helperFunctions } from "@/composable/helperFunctions";

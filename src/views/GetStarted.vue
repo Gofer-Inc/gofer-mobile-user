@@ -61,6 +61,7 @@
       :breakPoints="[0, 0.25, 0.5, 0.7, 0.9, 1]"
       :initialBreakpoint="0.25"
       :canDismiss="canDismiss"
+      noHeader
     >
       <NearYou class="mt-4" @close="closeModal" />
     </gModal>

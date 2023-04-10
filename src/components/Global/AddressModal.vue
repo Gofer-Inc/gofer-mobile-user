@@ -1,10 +1,13 @@
 <template>
-  <gModal @close="closeFN" :isOpen="isOpen" type="full" :showCloseButton="true">
+  <gModal
+    :title="title"
+    @close="closeFN"
+    :isOpen="isOpen"
+    type="full"
+    :showCloseButton="true"
+  >
     <ion-page>
       <ion-header mode="ios" class="ion-no-border">
-        <gNav borderless :showBackButton="false" :title="title" class="mt-4">
-        </gNav>
-
         <div class="mx-2 -mb-2">
           <gSearch v-model="searchText" />
         </div>
@@ -53,7 +56,13 @@
 </template>
 
 <script setup>
-import { IonPage, IonContent, IonIcon, IonRippleEffect } from "@ionic/vue";
+import {
+  IonPage,
+  IonHeader,
+  IonContent,
+  IonIcon,
+  IonRippleEffect,
+} from "@ionic/vue";
 import { navigate } from "ionicons/icons";
 import { ref } from "vue";
 

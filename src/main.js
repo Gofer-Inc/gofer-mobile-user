@@ -25,6 +25,13 @@ import '@ionic/vue/css/text-transformation.css';
 import '@ionic/vue/css/flex-utils.css';
 import '@ionic/vue/css/display.css';
 
+import "swiper/css";
+import "swiper/css/autoplay";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import "swiper/css/scrollbar";
+import "@ionic/vue/css/ionic-swiper.css";
+
 /* Theme variables */
 import './theme/variables.css';
 

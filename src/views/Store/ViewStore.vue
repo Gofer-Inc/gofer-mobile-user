@@ -42,13 +42,13 @@
               :icon="shareSocial"
             ></ion-icon
           ></ion-button>
-          <ion-button fill="clear">
+          <!-- <ion-button fill="clear">
             <ion-icon
               class="text-dark-300"
               slot="icon-only"
               :icon="search"
             ></ion-icon
-          ></ion-button>
+          ></ion-button> -->
         </ion-buttons>
       </gNav>
 
@@ -236,7 +236,7 @@ import {
 
 import {
   chevronBack,
-  search,
+  // search,
   shareSocial,
   heart,
   heartOutline,
@@ -245,13 +245,6 @@ import {
   star,
   gift,
 } from "ionicons/icons";
-
-import "swiper/css";
-import "swiper/css/autoplay";
-import "swiper/css/pagination";
-import "swiper/css/navigation";
-import "swiper/css/scrollbar";
-import "@ionic/vue/css/ionic-swiper.css";
 
 import { Autoplay, Keyboard, Pagination, Navigation, Scrollbar } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/vue";

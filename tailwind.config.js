@@ -88,7 +88,7 @@ module.exports = {
         },
 
         error: {
-          DEFAULT: "#D32F2F",
+          DEFAULT: "#eb445a",
         },
 
         dark: {

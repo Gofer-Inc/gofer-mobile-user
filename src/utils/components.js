@@ -14,6 +14,7 @@ import CustomLoader from "../components/Global/CustomLoader";
 import PageTitle from "../components/Global/PageTitle";
 import AddressModal from "../components/Global/AddressModal";
 import FileInput from "../components/Global/FileInput";
+import CheckOut from "../components/Global/CheckOut";
 
 export const registerComponents = (app) => {
   app
@@ -30,4 +31,5 @@ export const registerComponents = (app) => {
     .component("gLoader", CustomLoader)
     .component("gTitle", PageTitle)
     .component("gAddress", AddressModal)
+    .component("gCheckout", CheckOut)
 };

@@ -13,27 +13,38 @@
     class="sheet"
     :can-dismiss="canDismiss"
   >
-    <div class="relative w-full">
-      <div
+    <div class="relative w-full"></div>
+    <gNav
+      borderless
+      :title="title"
+      :showBackButton="false"
+      v-if="!noHeader"
+      class="my-2"
+    >
+      <ion-buttons
         v-if="showCloseButton"
-        @click="$emit('close')"
-        style=""
-        :class="`${closeButtonDark ? 'bg-dark' : 'bg-light'} ${
-          closeButtonDirection === 'left' ? 'left-2' : 'right-2'
-        }`"
-        class="absolute h-9 w-9 flex items-center justify-center rounded-full p-1 top-2 z-50"
+        :slot="closeButtonDirection === 'left' ? 'start' : 'end'"
       >
-        <ion-icon
-          :class="closeButtonDark ? ' text-white' : ' text-dark-400'"
-          class="text-2xl"
-          slot="icon-only"
-          :icon="close"
-        ></ion-icon>
-      </div>
-    </div>
-    <div :class="spacing ? 'ion-padding' : ''">
+        <ion-button>
+          <div
+            @click="$emit('close')"
+            style=""
+            :class="`${closeButtonDark ? 'bg-dark' : 'bg-light'} `"
+            class="h-8 w-8 flex items-center justify-center rounded-full p-1"
+          >
+            <ion-icon
+              :class="closeButtonDark ? ' text-white' : ' text-dark-400'"
+              class="text-2xl"
+              slot="icon-only"
+              :icon="close"
+            ></ion-icon>
+          </div>
+        </ion-button>
+      </ion-buttons>
+    </gNav>
+    <ion-content :class="spacing ? 'ion-padding' : ''">
       <slot />
-    </div>
+    </ion-content>
   </ion-modal>
   <ion-modal
     v-else
@@ -43,32 +54,49 @@
     }${type == 'full' ? 'full' : 'custom'}`"
     @ionModalDidDismiss="$emit('close')"
   >
-    <div class="relative w-full">
-      <div
+    <gNav
+      :title="title"
+      borderless
+      :color="color"
+      :showBackButton="false"
+      v-if="!noHeader"
+      class="my-2"
+    >
+      <ion-buttons
         v-if="showCloseButton"
-        @click="$emit('close')"
-        style=""
-        :class="`${closeButtonDark ? 'bg-dark' : 'bg-light'} ${
-          closeButtonDirection === 'left' ? 'left-2' : 'right-2'
-        }`"
-        class="absolute h-9 w-9 flex items-center justify-center rounded-full p-1 top-2 z-50"
+        :slot="closeButtonDirection === 'left' ? 'start' : 'end'"
       >
-        <ion-icon
-          :class="closeButtonDark ? ' text-white' : ' text-dark-400'"
-          class="text-2xl"
-          slot="icon-only"
-          :icon="close"
-        ></ion-icon>
-      </div>
-    </div>
-    <div :class="spacing ? 'ion-padding' : ''">
+        <ion-button>
+          <div
+            @click="$emit('close')"
+            style=""
+            :class="`${closeButtonDark ? 'bg-dark' : 'bg-light'} `"
+            class="h-8 w-8 flex items-center justify-center rounded-full p-1"
+          >
+            <ion-icon
+              :class="closeButtonDark ? ' text-white' : ' text-dark-400'"
+              class="text-2xl"
+              slot="icon-only"
+              :icon="close"
+            ></ion-icon>
+          </div>
+        </ion-button>
+      </ion-buttons>
+    </gNav>
+    <ion-content :class="spacing ? 'ion-padding' : ''">
       <slot />
-    </div>
+    </ion-content>
   </ion-modal>
 </template>
 
 <script setup>
-import { IonModal, IonIcon } from "@ionic/vue";
+import {
+  IonModal,
+  IonIcon,
+  IonContent,
+  IonButtons,
+  IonButton,
+} from "@ionic/vue";
 import { close } from "ionicons/icons";
 
 defineProps({
@@ -100,9 +128,21 @@ defineProps({
     type: Boolean,
     default: false,
   },
+  noHeader: {
+    type: Boolean,
+    default: false,
+  },
+  title: {
+    type: String,
+    default: "",
+  },
   closeButtonDirection: {
     type: String,
     default: "right",
+  },
+  color: {
+    type: String,
+    default: "transparent",
   },
   type: {
     type: String,

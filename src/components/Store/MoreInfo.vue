@@ -1,6 +1,6 @@
 <template>
   <gModal type="full" :isOpen="isOpen" @close="$emit('close')" showCloseButton>
-    <div class="">
+    <div class="-mt-4">
       <div class="text-xl font-medium">More Info</div>
       <div>
         {{ store && store.name }}
