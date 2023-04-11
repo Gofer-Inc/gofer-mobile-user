@@ -48,13 +48,20 @@ const routes = [
   {
     path: '/delivery',
     name:'Delivery',
-    component: () => import('@/views/Delivery/DeliveryPage.vue')
+    component: () => import('@/views/Delivery/DeliveryPage.vue'),
+
+  },
+  {
+    path: '/package/:id',
+    name:'ViewPackage',
+    component: () => import('@/views/Delivery/ViewPackage.vue')
   },
   {
     path: '/create-order',
     name:'CreateOrder',
     component: () => import('@/views/Delivery/CreateOrder.vue')
-  },
+  }
+  
  
 ]
 

@@ -11,7 +11,7 @@
         <gInput
           @click="fromModal = true"
           appendIcon="location"
-          v-model="args.senderAddress"
+          v-model="args.sender.address"
           label="Where from?"
           :error="errorRules.senderAddress"
           clearInput
@@ -23,33 +23,48 @@
           :error="errorRules.description"
         />
         <gInput
-          v-for="(item, i) in inputData"
-          :key="i"
-          @click="item.action"
-          :appendIcon="item.appendIcon"
-          v-model="args[item.input]"
-          :label="item.label"
-          :error="errorRules[item.error]"
-          :clearInput="item.isClear"
+          @click="toModal = true"
+          appendIcon="location"
+          v-model="args.receiver.address"
+          label="Where to?"
+          :error="errorRules.receiverAddress"
+          clearInput
         />
-
+        <gInput
+          appendIcon="person"
+          v-model="args.receiver.name"
+          label="Receiver's Name"
+          :error="errorRules.receiverName"
+        />
+        <gInput
+          appendIcon="call"
+          v-model="args.receiver.phoneNumber"
+          label="Receiver's Phone Number"
+          :error="errorRules.receiverPhoneNumber"
+        />
+        <gInput
+          appendIcon="call"
+          v-model="args.receiver.email"
+          label="Receiver's Email"
+          :error="errorRules.receiverEmail"
+        />
         <gButton @click="checkout" block>Confirm Order</gButton>
       </div>
     </ion-content>
 
     <gAddress
       :isOpen="fromModal"
-      @address="args.senderAddress = $event"
+      @address="args.sender.address = $event"
       @close="fromModal = false"
     />
     <gAddress
       :isOpen="toModal"
-      @address="args.receiverAddress = $event"
+      @address="args.receiver.address = $event"
       @close="toModal = false"
     />
 
     <gCheckout
-      :package="args"
+      :packageData="args"
       :isOpen="checkoutModal"
       @close="checkoutModal = false"
     />
@@ -71,14 +86,20 @@ const args = reactive({
   files: [],
   images: [],
   description: "",
-  senderAddress: "",
-  senderName: "John Doe",
-  senderPhoneNumber: "+234810813904",
-  senderEmail: "johndoe@gmail.com",
-  receiverAddress: "",
-  receiverName: "",
-  receiverPhoneNumber: "",
-  receiverEmail: "",
+
+  sender: {
+    address: "",
+    name: "John Doe",
+    phoneNumber: "+234810813904",
+    email: "johndoe@gmail.com",
+  },
+
+  receiver: {
+    address: "",
+    name: "",
+    phoneNumber: "",
+    email: "",
+  },
 });
 
 const errorRules = reactive({
@@ -89,68 +110,31 @@ const errorRules = reactive({
   senderAddress: "",
 });
 
-const inputData = ref([
-  {
-    label: "Where to?",
-    input: "receiverAddress",
-    appendIcon: "location",
-    error: "receiverAddress",
-    isClear: true,
-    action() {
-      toModal.value = true;
-    },
-  },
-  {
-    label: "Receiver's Name",
-    input: "receiverName",
-    appendIcon: "person",
-    error: "receiverName",
-    isClear: false,
-    action: null,
-  },
-  {
-    label: "Receiver's Phone Number",
-    input: "receiverPhoneNumber",
-    appendIcon: "call",
-    error: "receiverPhoneNumber",
-    isClear: false,
-    action: null,
-  },
-  {
-    label: "Receiver's Email (Optional)",
-    input: "receiverEmail",
-    appendIcon: "mail",
-    error: "receiverEmail",
-    isClear: false,
-    action: null,
-  },
-]);
-
 function validateForm() {
   let checkNumber =
-    isNaN(args.receiverPhoneNumber.trim()) ||
-    (processNumber(args.receiverPhoneNumber) &&
-      processNumber(args.receiverPhoneNumber).length !== 13);
+    isNaN(args.receiver.phoneNumber.trim()) ||
+    (processNumber(args.receiver.phoneNumber) &&
+      processNumber(args.receiver.phoneNumber).length !== 13);
 
-  if (args.senderAddress.trim() === "") {
+  if (args.sender.address.trim() === "") {
     errorRules.senderAddress = "Please fill in sender's address";
     return false;
   } else if (args.description.trim() === "") {
     errorRules.description = "Please fill in the description";
     return false;
-  } else if (args.receiverAddress.trim() === "") {
+  } else if (args.receiver.address.trim() === "") {
     errorRules.receiverAddress = "Please fill in receiver's address";
     return false;
-  } else if (args.receiverName.trim() === "") {
+  } else if (args.receiver.name.trim() === "") {
     errorRules.receiverName = "Please fill in receiver's name";
     return false;
-  } else if (args.receiverPhoneNumber.trim() === "") {
+  } else if (args.receiver.phoneNumber.trim() === "") {
     errorRules.receiverPhoneNumber = "Please fill in receiver's phone number";
     return false;
   } else if (checkNumber !== false) {
     errorRules.receiverPhoneNumber = "Phone number badly formatted";
     return false;
-  } else if (args.receiverEmail && !validateEmail(args.receiverEmail)) {
+  } else if (args.receiver.email && !validateEmail(args.receiver.email)) {
     errorRules.receiverEmail = "Email is badly formated";
     return false;
   } else {
@@ -166,7 +150,6 @@ function validateForm() {
 const checkout = () => {
   if (validateForm()) {
     console.log(args);
-
     checkoutModal.value = true;
   }
 };

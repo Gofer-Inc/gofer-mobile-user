@@ -4,7 +4,8 @@ import mac from "@/assets/images/mac.png";
 let packages = [
     {
       description: "Iphone 14 pro max",
-      receive:{
+      
+      receiver:{
         name:'Jake Williams',
       address:'Nostalgea Cinemas, Opposite Etegwe School Road Along, express way, Isaac Adaka Borough',
       phoneNumber:'+234810813904',
@@ -33,16 +34,16 @@ let packages = [
       vat:500,
       deliveryCost:4500,
       images:[iphone, mac],
-      _id:1
+      id:1
 
     },
     {
       description: "Mac Book M1, Air pod pro",
-      receive:{
+      receiver:{
         name:'Jake Williams',
-      address:'Nostalgea Cinemas, Opposite Etegwe School Road Along, express way, Isaac Adaka Borough',
-      phoneNumber:'+234810813904',
-      email:'jakewilliams@gmail.com',
+        address:'Nostalgea Cinemas, Opposite Etegwe School Road Along, express way, Isaac Adaka Borough',
+        phoneNumber:'+234810813904',
+        email:'jakewilliams@gmail.com',
       },
 
       sender:{
@@ -61,13 +62,13 @@ let packages = [
 
       createdAt:'Mar 31, 2023',
       orderNo:'4193402',
-      status:'Received',
+      status:'receiverd',
 
       totalCost:7500,
       vat:500,
       deliveryCost:7000,
       images:[mac, iphone],
-      _id:2
+      id:2
 
     },
    

@@ -33,7 +33,7 @@
           :color="dark ? 'light' : 'medium'"
           class="Navbar text-sm"
           :text="backButtonText"
-          :icon="allIcons['arrowBack']"
+          :icon="allIcons['chevronBack']"
         ></ion-back-button>
       </ion-buttons>
       <slot />

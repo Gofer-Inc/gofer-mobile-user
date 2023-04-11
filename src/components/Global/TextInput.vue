@@ -30,7 +30,7 @@
         :autocomplete="autocomplete"
         :autocorrect="autocorrect"
         :autofocus="autofocus"
-        @blur="markTouched"
+        @blur="inputFocus = false"
         @focus="inputFocus = true"
         @input="updateField($event)"
       />
@@ -40,7 +40,7 @@
         :value="formatAmount"
         :placeholder="placeholder"
         @ionInput="updateField($event)"
-        @ionBlur="markTouched"
+        @ionBlur="inputFocus = false"
         @ionFocus="inputFocus = true"
         :name="name"
         :type="type"
@@ -273,7 +273,7 @@ export default {
 
       if (props.appendIcon) {
         if (inputFocus.value) {
-          style = "left-9 -top-3 p-1 text-sm ";
+          style = "left-11 -top-3 p-1 text-sm ";
         } else {
           if (String(props.modelValue).trim() === "") {
             style = "left-11 top-1/2 transform -translate-y-1/2";
@@ -370,12 +370,12 @@ export default {
       return arg.replace(regex, "");
     },
 
-    markTouched() {
-      if (this.modelValue.trim() === "") {
-        this.inputFocus = false;
-      }
-      this.$refs.item.$el.classList.add("ion-touched");
-    },
+    // markTouched() {
+    //   this.inputFocus = false;
+    //   // if (this.modelValue.trim() === "") {
+    //   // }
+    //   this.$refs.item.$el.classList.add("ion-touched");
+    // },
 
     resetField() {
       this.$emit("update:modelValue", "");

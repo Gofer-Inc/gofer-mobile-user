@@ -4,7 +4,7 @@
     v-if="show"
     class="ion-no-border bg-white pb-6"
   >
-    <ion-toolbar class="px-0 bg-white" color="white">
+    <ion-toolbar class="footer p-0 bg-white" color="white">
       <slot />
     </ion-toolbar>
   </ion-footer>
@@ -32,4 +32,8 @@ Keyboard.addListener("keyboardDidHide", () => {
 });
 </script>
 
-<style></style>
+<style scope>
+/* ion-toolbar.footer {
+  padding: 0 !important;
+} */
+</style>

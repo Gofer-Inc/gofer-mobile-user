@@ -15,6 +15,7 @@ import PageTitle from "../components/Global/PageTitle";
 import AddressModal from "../components/Global/AddressModal";
 import FileInput from "../components/Global/FileInput";
 import CheckOut from "../components/Global/CheckOut";
+import zigzagLine from "../components/Global/zigzagLine";
 
 export const registerComponents = (app) => {
   app
@@ -32,4 +33,5 @@ export const registerComponents = (app) => {
     .component("gTitle", PageTitle)
     .component("gAddress", AddressModal)
     .component("gCheckout", CheckOut)
+    .component("gZigzag", zigzagLine)
 };
