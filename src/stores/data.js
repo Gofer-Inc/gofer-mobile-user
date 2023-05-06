@@ -6,10 +6,12 @@ export const useDataStore = defineStore("main", {
     name: "Gofer",
     count: 0,
     isLoggedIn: false,
+    user:null
   }),
 
   getters: {
     getLogin: (state) => state.isLoggedIn,
+    getUser: (state) => state.user
   },
   actions: {
     set({ type, data }) {

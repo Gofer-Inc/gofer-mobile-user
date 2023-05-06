@@ -1,6 +1,6 @@
 <template>
   <ion-page>
-    <gNav :showBackButton="false" borderless color="transparent">
+    <gNav :showBackButton="false" borderless color="primary">
       <div class="flex items-center justify-between p-2 text-dark-300 py-3">
         <div class="flex flex-col text-base w-10">
           <img src="@/assets/icon/gofer-skin.svg" alt="" />

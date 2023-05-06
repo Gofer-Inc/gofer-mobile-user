@@ -8,7 +8,7 @@
         $emit('function'),
           $router.push({ name: 'ViewStore', params: { id: store.id } })
       "
-      class="relative bg-primary h-40 overflow-hidden rounded-2xl"
+      class="relative bg-primary h-40 max-h-full flex-shrink-0 overflow-hidden rounded-2xl"
     >
       <img
         style="width: 100% !important; height: 100% !important"
@@ -18,11 +18,11 @@
       />
 
       <div
-        v-if="closed"
+        v-if="closed && !simple"
         class="absolute bg-dark-400 opacity-50 inset-0 z-20"
       ></div>
       <div
-        v-if="closed"
+        v-if="closed && !simple"
         class="absolute inset-0 flex items-center justify-center gap-1 z-30"
       >
         <ion-icon
@@ -41,6 +41,7 @@
           >{{ store && store.name }}</span
         >
         <ion-icon
+          v-if="!simple"
           :color="isFavourite ? 'secondary' : ''"
           class="text-2xl"
           :class="closed ? 'opacity-50' : ''"
@@ -49,6 +50,7 @@
         />
       </div>
       <div
+        v-if="!simple"
         :class="closed ? 'text-dark-100' : 'text-dark-300'"
         class="text-sm flex items-center gap-1 mt-1"
       >
@@ -154,6 +156,11 @@ const props = defineProps({
       },
       averageDeliveryTime: "25 Min",
     }),
+  },
+
+  simple: {
+    type: Boolean,
+    default: false,
   },
 });
 

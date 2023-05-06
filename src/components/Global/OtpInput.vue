@@ -22,24 +22,6 @@
           :type="type"
           ref="otpInput"
         />
-        <!-- <ion-input
-          :class="`${error ? 'border-error' : 'border-medium'} ${inputClass}`"
-          class="custom w-10 h-10 border rounded-md font-medium text-heading"
-          required="true"
-          :maxlength="maxlength"
-          :type="type"
-          ref="otpInput"
-          :id="String(i.id)"
-          v-model="i.value"
-          :value="i.value"
-          :disabled="disabled"
-          @ionFocus="inputClass = 'border-primary'"
-          @ionBlur="inputClass = 'border-medium'"
-          inputmode="numeric"
-          @ionInput="$emit('input', $event.target.value)"
-          @keyup="otpInputKeyDown($event, i.id)"
-        >
-        </ion-input> -->
       </ion-col>
     </ion-row>
     <ion-row v-if="error" class="-mt-1 text-error text-xs">

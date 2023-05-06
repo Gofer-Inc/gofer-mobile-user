@@ -14,6 +14,7 @@ const routes = [
     component: () => import('@/views/GetStarted.vue')
 
   },
+  //// Store Routes
   {
     path: '/store',
     component: StoreLayout,
@@ -31,7 +32,7 @@ const routes = [
       {
         path: '/search',
         name:'Search',
-        component: () => import('@/views/SearchPage.vue')
+        component: () => import('@/views/Search/SearchPage.vue')
       },
       {
         path: '/orders',
@@ -45,6 +46,23 @@ const routes = [
       }
     ]
   },
+  {
+    path: '/profile/:id',
+    name:'ViewPage',
+    component: () => import('@/views/Profile/ViewPage.vue'),
+  },
+  {
+    path: '/faq',
+    name:'FAQ',
+    component: () => import('@/views/Help/FaqPage.vue'),
+  },
+  {
+    path: '/help',
+    name:'Help',
+    component: () => import('@/views/Help/SupportPage.vue'),
+  },
+
+  // Package Deliver Routes
   {
     path: '/delivery',
     name:'Delivery',
@@ -60,6 +78,23 @@ const routes = [
     path: '/create-order',
     name:'CreateOrder',
     component: () => import('@/views/Delivery/CreateOrder.vue')
+  },
+
+  // Authentication Routes
+  {
+    path: '/auth/login',
+    name:'Login',
+    component: () => import('@/views/auth/LoginPage.vue')
+  },
+  {
+    path: '/auth/password',
+    name:'ForgotPassword',
+    component: () => import('@/views/auth/ForgotPassword.vue')
+  },
+  {
+    path: '/auth/register',
+    name:'Register',
+    component: () => import('@/views/auth/RegisterPage.vue')
   }
   
  

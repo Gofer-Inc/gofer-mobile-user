@@ -8,13 +8,12 @@
     <ion-toolbar
       :color="color ? color : undefined"
       :class="color == 'transparent' ? 'transparent' : ''"
-      class="Navbar"
+      class="Navbar -mt-6"
     >
-      <ion-title class=""> </ion-title>
+      <ion-title class="text-sm"> </ion-title>
     </ion-toolbar>
   </ion-header>
   <ion-header
-    mode="ios"
     v-else
     :class="`${borderless ? 'ion-no-border' : ''} ${
       color == 'white' ? 'bg-white' : ''
@@ -40,7 +39,7 @@
       <ion-title
         v-if="title.length"
         :class="dark ? `text-white` : 'text-heading'"
-        class="Navbar capitalize font-medium"
+        class="Navbar capitalize font-medium text-sm"
       >
         {{ title }}
       </ion-title>
@@ -89,7 +88,7 @@ defineProps({
   },
   borderless: {
     type: Boolean,
-    default: false,
+    default: true,
   },
 
   color: {

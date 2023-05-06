@@ -306,7 +306,7 @@ export default {
       } else {
         return inputFocus.value
           ? `var(--ion-color-${props.color})`
-          : `var(--ion-color-medium)`;
+          : `var(--ion-color-medium-tint)`;
       }
     });
 
@@ -400,12 +400,12 @@ export default {
 
 .borderClass {
   border: 1.5px solid v-bind(colorName) !important;
-  border-radius: 16px !important;
+  border-radius: 12px !important;
 }
 
 ion-item.textInput {
   border: none !important;
-  border-radius: 16px !important;
+  border-radius: 12px !important;
   --border-color: #ffffff;
   /* caret-color: var(--ion-color-medium) !important; */
   padding-top: 2px !important;
