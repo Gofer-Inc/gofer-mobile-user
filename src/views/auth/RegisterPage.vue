@@ -65,7 +65,7 @@
         <gButton
           @click="verifyEmail"
           :loading="loading"
-          :disabled="otpCode.length !== 6"
+          :disabled="otpCode.length !== 4"
           type="submit"
           block
           >Continue</gButton

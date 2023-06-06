@@ -1,7 +1,12 @@
 <template>
   <ion-page v-if="store">
-    <ion-header mode="ios">
-      <gNav borderless :showBackButton="false" class="relative pt-3">
+    <ion-header mode="ios" class="bg-white">
+      <gNav
+        borderless
+        :showBackButton="false"
+        color="white"
+        class="relative pt-3"
+      >
         <ion-buttons slot="start">
           <ion-button @click="$router.go(-1)" fill="clear">
             <ion-icon
@@ -362,30 +367,6 @@ const selectMenu = (e, index) => {
 ion-chip.store {
   border-radius: 7px !important;
   padding: 20px 8px;
-}
-
-ion-segment.custom {
-  border: 1px solid #dfdfdf;
-  border-radius: 14px;
-  background: #ffffff;
-}
-
-ion-segment-button.custom::part(indicator-background) {
-  /* background: #08a391; */
-  background: var(--ion-color-primary);
-}
-
-/* iOS styles */
-ion-segment-button.ios.custom::part(native) {
-  color: var(--ion-color-primary);
-}
-
-.segment-button-checked.ios.custom::part(native) {
-  color: #fff;
-}
-
-ion-segment-button.ios.custom::part(indicator-background) {
-  border-radius: 12px;
 }
 
 .no-scrollbar::-webkit-scrollbar {

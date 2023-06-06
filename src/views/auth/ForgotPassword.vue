@@ -62,7 +62,7 @@
         <gButton
           @click="verifyOtp"
           :loading="loading"
-          :disabled="args.code.length !== 6"
+          :disabled="args.code.length !== 4"
           type="submit"
           block
           >Continue</gButton

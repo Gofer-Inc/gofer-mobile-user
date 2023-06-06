@@ -99,6 +99,7 @@ import StoreCategory from "@/components/Store/StoreCategory.vue";
 import HandPicked from "@/components/Store/HandPicked.vue";
 import FeaturedStore from "@/components/Store/FeaturedStore.vue";
 import StoreCard from "@/components/Store/StoreCard.vue";
+import { Geolocation } from "@capacitor/geolocation";
 
 import { computed, ref } from "vue";
 
@@ -107,6 +108,14 @@ const addressModal = ref(false);
 const visibleStores = ref([]);
 const storesIndex = ref(5);
 const allStores = computed(() => storeDB);
+
+const printCurrentPosition = async () => {
+  const coordinates = await Geolocation.getCurrentPosition();
+
+  console.log("Current position:", coordinates);
+};
+
+printCurrentPosition();
 
 const updateVisibleStores = () => {
   let currentIndex = visibleStores.value.length;

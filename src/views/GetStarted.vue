@@ -27,13 +27,14 @@
         </div>
       </div>
     </gNav>
-    <ion-content fullscreen color="primary" class="ion-padding">
+
+    <ion-content fullscreen color="primary" class="relative">
       <div
-        class="grid grid-cols-2 gap-4 place-content-center justify-item-center mt-20"
+        class="fixed z-[-1] grid grid-cols-2 gap-4 place-content-center justify-item-center py-20 ion-padding"
       >
         <div
           v-for="(service, i) in services"
-          @click="closeModal(), $router.push({ name: service.route })"
+          @click="$router.push({ name: service.route })"
           :key="i"
           style="box-shadow: 6px 6px 24px 2px rgba(0, 0, 0, 0.1)"
           :class="`${i == 1 ? 'mt-24 animate__delay-2s' : ''} `"
@@ -51,20 +52,9 @@
           </div>
         </div>
       </div>
+      <div class="h-[60vh] pointer-events-none"></div>
+      <NearYou class="z-10" />
     </ion-content>
-
-    <gModal
-      @close="isOpen = false"
-      :isOpen="isOpen"
-      type="sheet"
-      :backdropDismiss="false"
-      :breakPoints="[0, 0.25, 0.5, 0.7, 0.9, 1]"
-      :initialBreakpoint="0.25"
-      :canDismiss="canDismiss"
-      noHeader
-    >
-      <NearYou class="mt-4" @close="closeModal" />
-    </gModal>
   </ion-page>
 </template>
 
@@ -75,7 +65,6 @@ import {
   IonButtons,
   IonButton,
   IonIcon,
-  onIonViewWillEnter,
 } from "@ionic/vue";
 import { gift } from "ionicons/icons";
 
@@ -85,9 +74,6 @@ import deliveryLogo from "@/assets/icon/packageIcon.svg";
 import NearYou from "@/components/Store/NearYou.vue";
 
 import { ref } from "vue";
-
-const isOpen = ref(true);
-const canDismiss = ref(false);
 
 const services = ref([
   {
@@ -101,17 +87,4 @@ const services = ref([
     route: "Delivery",
   },
 ]);
-
-onIonViewWillEnter(() => {
-  isOpen.value = true;
-  canDismiss.value = false;
-});
-
-const closeModal = () => {
-  canDismiss.value = true;
-  setTimeout(() => {
-    isOpen.value = false;
-  }, 500);
-  console.log(canDismiss.value, isOpen.value);
-};
 </script>

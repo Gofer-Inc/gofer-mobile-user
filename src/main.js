@@ -33,6 +33,8 @@ import "swiper/css/navigation";
 import "swiper/css/scrollbar";
 import "@ionic/vue/css/ionic-swiper.css";
 
+import 'primeicons/primeicons.css';
+
 /* Theme variables */
 import './theme/variables.css';
 

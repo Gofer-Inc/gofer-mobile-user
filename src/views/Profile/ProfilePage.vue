@@ -3,8 +3,8 @@
     <gNav :showBackButton="false" empty />
 
     <ion-content fullscreen class="">
-      <div class="flex flex-col ion-padding gap-4">
-        <div v-if="isLogin" class="flex flex-col gap-1">
+      <div class="flex flex-col py-4 gap-4">
+        <div v-if="isLogin" class="flex flex-col gap-1 px-4">
           <span class="text-2xl font-medium text-dark-400"
             >Account Settings</span
           >
@@ -48,7 +48,7 @@
 
           <div
             v-if="isLogin"
-            class="mb-2 mt-6 text-dark-300 font-medium text-lg"
+            class="mb-2 mt-6 text-dark-300 font-medium text-lg px-4"
           >
             MORE
           </div>
@@ -86,9 +86,14 @@
           </div>
         </div>
 
-        <gButton block v-if="!isLogin" @click="$router.push({ name: 'Login' })"
-          >Login</gButton
-        >
+        <div class="px-4">
+          <gButton
+            block
+            v-if="!isLogin"
+            @click="$router.push({ name: 'Login' })"
+            >Login</gButton
+          >
+        </div>
       </div>
     </ion-content>
   </ion-page>
@@ -137,10 +142,10 @@ const links = computed(() => {
       show: isLogin.value,
     },
     {
-      title: "Payment Methods",
-      sub: "Add your credit & debit cards",
+      title: "Wallet",
+      sub: "Manage your credit & debit cards",
       icon: card,
-      params: "PaymentMethods",
+      params: "Wallet",
       show: isLogin.value,
     },
     {

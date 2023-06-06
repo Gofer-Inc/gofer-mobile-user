@@ -49,7 +49,7 @@ const props = defineProps({
   placeholder: String,
   tokenLength: {
     type: [String, Number],
-    default: 6,
+    default: 4,
   },
   text: String,
   type: {

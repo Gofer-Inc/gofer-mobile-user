@@ -26,7 +26,7 @@
     <ion-content fullscreen>
       <div v-if="!displaySearch" class="flex flex-col gap-6 ion-padding pb-10">
         <div class="flex flex-col gap-2">
-          <div>Top Categories</div>
+          <gTitle title="Top Categories" />
           <div class="flex items-center justify-around gap-2 flex-wrap">
             <div
               v-for="(category, i) in categories"

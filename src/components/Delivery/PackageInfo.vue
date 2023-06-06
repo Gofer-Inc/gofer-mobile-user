@@ -7,7 +7,7 @@
         :pagination="true"
         :zoom="true"
         :space-between="10"
-        :slidesPerView="1"
+        :slidesPerView="packageImages && packageImages.length > 1 ? 1.1 : 1"
         @swiper="setSwiperInstance"
         class="w-full"
         v-if="packageImages"
@@ -20,7 +20,7 @@
               style="width: 100% !important; height: 100% !important"
               :src="url"
               alt=""
-              class="w-full object-cover"
+              class="object-cover"
             />
           </div>
         </swiper-slide>

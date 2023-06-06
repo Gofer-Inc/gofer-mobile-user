@@ -1,0 +1,25 @@
+
+{
+	"appId": "io.ionic.starter",
+	"appName": "Gofer",
+	"webDir": "dist",
+	  
+  "plugins":{
+		"SplashScreen": {
+			"launchShowDuration": 0
+		},
+
+		"Keyboard": {
+			"resize": "body",
+			"resizeOnFullScreen": false
+		},
+		
+		"Server": {
+			"cleartext": true,
+			"hostname": "localhost:8100",
+			"androidScheme": "http"
+		}
+	}
+}
+
+

@@ -62,7 +62,7 @@ let packages = [
 
       createdAt:'Mar 31, 2023',
       orderNo:'4193402',
-      status:'receiverd',
+      status:'Processing',
 
       totalCost:7500,
       vat:500,
