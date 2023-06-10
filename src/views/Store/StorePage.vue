@@ -45,7 +45,7 @@
         </div>
       </div>
     </gNav>
-    <ion-content fullscreen class="ion-padding">
+    <ion-content fullscreen class="px-4">
       <ion-refresher slot="fixed" @ionRefresh="reload($event)">
         <ion-refresher-content></ion-refresher-content>
       </ion-refresher>
