@@ -1,21 +1,22 @@
 
-import TextInput from "@/components/Global/TextInput";
-import SearchInput from "../components/Global/SearchInput";
-import OtpInput from "@/components/Global/OtpInput";
-import CustomButton from "../components/Global/CustomButton";
-import TextArea from "@/components/Global/TextArea";
-import SelectInput from "../components/Global/SelectInput";
-// import PasswordKeyInput from "@/components/Global/PasswordKeyInput";
-import NavBar from "../components/Global/NavBar";
-import CustomModal from "../components/Global/CustomModal";
-import FooterBar from "../components/Global/FooterBar";
-// import OtpBox from "../components/Global/OtpBox";
-import CustomLoader from "../components/Global/CustomLoader";
-import PageTitle from "../components/Global/PageTitle";
-import AddressModal from "../components/Global/AddressModal";
-import FileInput from "../components/Global/FileInput";
-import CheckOut from "../components/Global/CheckOut";
-import zigzagLine from "../components/Global/zigzagLine";
+import TextInput from "@/components/Global/TextInput.vue";
+import SearchInput from "../components/Global/SearchInput.vue";
+import OtpInput from "@/components/Global/OtpInput.vue";
+import CustomButton from "../components/Global/CustomButton.vue";
+import TextArea from "@/components/Global/TextArea.vue";
+import SelectInput from "../components/Global/SelectInput.vue";
+// import PasswordKeyInput from "@/components/Global/PasswordKeyInput.vue";
+import NavBar from "../components/Global/NavBar.vue";
+import CustomModal from "../components/Global/CustomModal.vue";
+import FooterBar from "../components/Global/FooterBar.vue";
+// import OtpBox from "../components/Global/OtpBox.vue";
+import CustomLoader from "../components/Global/CustomLoader.vue";
+import CustomToast from "../components/Global/CustomToast.vue";
+import PageTitle from "../components/Global/PageTitle.vue";
+import AddressModal from "../components/Global/AddressModal.vue";
+import FileInput from "../components/Global/FileInput.vue";
+import CheckOut from "../components/Global/CheckOut.vue";
+import zigzagLine from "../components/Global/zigzagLine.vue";
 
 export const registerComponents = (app) => {
   app
@@ -34,4 +35,5 @@ export const registerComponents = (app) => {
     .component("gAddress", AddressModal)
     .component("gCheckout", CheckOut)
     .component("gZigzag", zigzagLine)
+    .component("gToast", CustomToast)
 };

@@ -29,26 +29,30 @@
     </gNav>
 
     <ion-content fullscreen color="primary" class="relative">
-      <div
-        class="fixed z-[-1] grid grid-cols-2 gap-4 place-content-center justify-item-center py-20 ion-padding"
-      >
+      <div class="fixed z-[-1] w-full">
         <div
-          v-for="(service, i) in services"
-          @click="$router.push({ name: service.route })"
-          :key="i"
-          style="box-shadow: 6px 6px 24px 2px rgba(0, 0, 0, 0.1)"
-          :class="`${i == 1 ? 'mt-24 animate__delay-2s' : ''} `"
-          class="max-w-full mx-auto w-52 sm:w-10/12 h-64 bg-white rounded-3xl ion-padding flex flex-col gap-6 animate__animated animate__pulse animate__slower animate__infinite"
+          class="grid grid-cols-2 gap-4 place-content-center justify-item-center py-20 ion-padding mx-auto"
         >
-          <div :class="i == 1 ? 'w-11/12' : 'w-10/12'" class="mx-auto h-full">
-            <img
-              :src="service.logo"
-              :alt="service.title"
-              class="h-full mx-auto"
-            />
-          </div>
-          <div class="text-xl sm:text-2xl font-medium text-dark-300 leading-7">
-            {{ service.title }}
+          <div
+            v-for="(service, i) in services"
+            @click="$router.push({ name: service.route })"
+            :key="i"
+            style="box-shadow: 6px 6px 24px 2px rgba(0, 0, 0, 0.1)"
+            :class="`${i == 1 ? 'mt-24 animate__delay-2s' : ''} `"
+            class="max-w-full mx-auto w-52 sm:w-10/12 md:w-8/12 h-64 bg-white rounded-3xl ion-padding flex flex-col gap-6 animate__animated animate__pulse animate__slower animate__infinite"
+          >
+            <div :class="i == 1 ? 'w-11/12' : 'w-10/12'" class="mx-auto h-full">
+              <img
+                :src="service.logo"
+                :alt="service.title"
+                class="h-full mx-auto"
+              />
+            </div>
+            <div
+              class="text-xl sm:text-2xl font-medium text-dark-300 leading-7"
+            >
+              {{ service.title }}
+            </div>
           </div>
         </div>
       </div>

@@ -17,9 +17,9 @@
     <ion-content fullscreen>
       <!-- //// Step 1 ///// -->
       <div v-if="step === 'email'" class="ion-padding flex flex-col gap-4">
-        <div class="text-center pb-4 pt-2">
+        <div class="pb-4 pt-2 text-center">
           <h2 class="text-2xl text-dark-400">Create Account</h2>
-          <p class="text-dark-200 mt-1 text-sm">Enter a valid email address</p>
+          <p class="mt-1 text-sm text-dark-200">Enter a valid email address</p>
         </div>
 
         <form
@@ -40,10 +40,10 @@
           <gButton :loading="loading" type="submit" block>Next</gButton>
         </form>
 
-        <div class="text-dark-200 text-sm text-center py-4">
+        <div class="py-4 text-center text-sm text-dark-200">
           Already have account?
           <span
-            class="text-primary font-medium"
+            class="font-medium text-primary"
             @click="$router.push({ name: 'Login' })"
             >Login</span
           >
@@ -52,14 +52,14 @@
 
       <!-- //// Step 2 ///// -->
       <div v-if="step === 'otp'" class="ion-padding flex flex-col gap-4">
-        <div class="text-center pb-4 pt-2">
+        <div class="pb-4 pt-2 text-center">
           <h2 class="text-2xl text-dark-400">Verify Email</h2>
-          <p class="text-dark-200 mt-1 text-sm font-medium">
+          <p class="mt-1 text-sm font-medium text-dark-200">
             Enter the 4-Digit code sent to you at {{ args.email }}
           </p>
         </div>
 
-        <div class="w-full mx-auto">
+        <div class="mx-auto w-full">
           <gOtp @input="otpCode = $event" :error="errorRules.otp" />
         </div>
         <gButton
@@ -71,17 +71,17 @@
           >Continue</gButton
         >
 
-        <div class="text-dark-200 text-sm text-center py-4">
+        <div class="py-4 text-center text-sm text-dark-200">
           Didn’t receive code?
-          <span class="text-primary font-medium">Resend Code</span>
+          <span class="font-medium text-primary">Resend Code</span>
         </div>
       </div>
 
       <!-- //// Step 2 ///// -->
       <div v-if="step === 'personal'" class="ion-padding flex flex-col gap-4">
-        <div class="text-center pb-4 pt-2">
+        <div class="pb-4 pt-2 text-center">
           <h2 class="text-2xl text-dark-400">Create Account</h2>
-          <p class="text-dark-200 mt-1 text-sm">
+          <p class="mt-1 text-sm text-dark-200">
             Enter your Name, Phone Number and Password for sign up.
           </p>
         </div>
@@ -129,20 +129,20 @@
           <gButton :loading="loading" type="submit" block>Next</gButton>
         </form>
 
-        <div class="text-dark-200 text-sm text-center py-4">
+        <div class="py-4 text-center text-sm text-dark-200">
           Already have account?
           <span
-            class="text-primary font-medium"
+            class="font-medium text-primary"
             @click="$router.push({ name: 'Login' })"
             >Login</span
           >
         </div>
       </div>
 
-      <div class="mx-6 text-dark-200 text-sm text-center">
+      <div class="mx-6 text-center text-sm text-dark-200">
         By Signing up, you agree to our
-        <span class="text-primary font-medium">Terms Conditions </span> &
-        <span class="text-primary font-medium">Privacy Policy </span>
+        <span class="font-medium text-primary">Terms Conditions </span> &
+        <span class="font-medium text-primary">Privacy Policy </span>
       </div>
     </ion-content>
   </ion-page>
@@ -166,7 +166,7 @@ import { helperFunctions } from "@/composable/helperFunctions";
 import { inject } from "vue";
 import { Preferences } from "@capacitor/preferences";
 
-const { validateEmail, processNumber } = helperFunctions;
+const { validateEmail, processNumber, showToast } = helperFunctions;
 const router = useRouter();
 const http = inject("http");
 
@@ -227,6 +227,14 @@ const validation = () => {
   }
 };
 
+const clearFields = () => {
+  args.email = "";
+  args.firstName = "";
+  args.lastName = "";
+  args.phoneNumber = "";
+  args.password = "";
+};
+
 const signUp = async () => {
   if (validation()) {
     loading.value = true;
@@ -242,6 +250,7 @@ const signUp = async () => {
       step.value = "otp";
       loading.value = false;
     } catch (error) {
+      showToast("error", error.message);
       loading.value = false;
     }
   }

@@ -6,10 +6,19 @@ export const useDataStore = defineStore("main", {
     name: "Gofer",
     count: 0,
     isLoggedIn: false,
-    user:null
+    user:null,
+
+    toast:{
+      isOpen:false,
+      type:'success',
+      position:'top',
+      message:'',
+      duration: 3000,
+    }
   }),
 
   getters: {
+    getToast: (state) => state.toast,
     getLogin: (state) => state.isLoggedIn,
     getUser: (state) => state.user
   },
@@ -20,6 +29,10 @@ export const useDataStore = defineStore("main", {
 
     increment() {
       this.count++;
+    },
+
+    setToast({isOpen = true, type ='success', position = 'top', message = '', duration =3000}){
+      this.toast = {isOpen, type, position, message, duration}
     },
  
   },

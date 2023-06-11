@@ -1,4 +1,4 @@
-package io.ionic.starter;
+package ng.gofer.business;
 
 import com.getcapacitor.BridgeActivity;
 

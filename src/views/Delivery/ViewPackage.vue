@@ -110,13 +110,21 @@ onMounted(async () => {
 
 const getStatus = (status) => {
   let obj = {
-    Pending: "primary",
-    Received: "info",
-    Ongoing: "info",
-    Delivered: "success",
+    Pending: {
+      text: "text-primary",
+      border: "border-primary",
+    },
+    Processing: {
+      text: "text-info",
+      border: "border-info",
+    },
+    Delivered: {
+      text: "text-success",
+      border: "border-success",
+    },
   };
 
-  return { text: `text-${obj[status]}`, border: `border-${obj[status]}` };
+  return obj[status];
 };
 </script>
 

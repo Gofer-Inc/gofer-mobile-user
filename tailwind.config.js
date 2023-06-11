@@ -1,4 +1,6 @@
-module.exports = {
+/** @type {import('tailwindcss').Config} */
+
+export default {
   future: {
     purgeLayersByDefault: true,
   },
@@ -167,4 +169,5 @@ module.exports = {
     },
   },
   plugins: [ require('@tailwindcss/line-clamp')],
-};
+}
+

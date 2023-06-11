@@ -1,7 +1,7 @@
 {
-  "name": "Gofer",
+  "name": "Prozo",
   "integrations": {
     "capacitor": {}
   },
-  "type": "vue"
+  "type": "vue-vite"
 }

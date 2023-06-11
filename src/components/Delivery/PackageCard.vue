@@ -27,7 +27,7 @@
               getStatus(data && data.status).text,
               getStatus(data && data.status).border,
             ]"
-            class="rounded-full border p-1 px-2 text-xs"
+            class="rounded-full p-1 px-2 text-xs"
             >{{ data && data.status }}
           </span>
         </div>

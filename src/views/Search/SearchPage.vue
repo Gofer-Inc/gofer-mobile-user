@@ -3,7 +3,7 @@
     <ion-header mode="ios" class="ion-no-border bg-white">
       <gNav :showBackButton="false">
         <div class="flex items-center justify-between gap-2 px-2 py-3">
-          <h2 class="text-2xl font-medium">Search</h2>
+          <h2 class="text-xl font-medium">Search</h2>
           <ion-buttons slot="end">
             <ion-button fill="clear">
               <ion-icon
@@ -24,10 +24,10 @@
       </div>
     </ion-header>
     <ion-content fullscreen>
-      <div v-if="!displaySearch" class="flex flex-col gap-6 ion-padding pb-10">
+      <div v-if="!displaySearch" class="ion-padding flex flex-col gap-6 pb-10">
         <div class="flex flex-col gap-2">
           <gTitle title="Top Categories" />
-          <div class="flex items-center justify-around gap-2 flex-wrap">
+          <div class="flex flex-wrap items-center justify-around gap-2">
             <div
               v-for="(category, i) in categories"
               @click="(searchText = category.name), handleSearch()"
@@ -35,11 +35,11 @@
               class="flex flex-col gap-1"
             >
               <div
-                class="flex-shrink-0 w-20 h-20 border-2 border-primary-light rounded-2xl overflow-hidden flex"
+                class="flex h-20 w-20 flex-shrink-0 overflow-hidden rounded-2xl border-2 border-primary-light"
               >
                 <img :src="category.logo" alt="" class="h-full object-cover" />
               </div>
-              <div class="text-center text-dark-300 text-sm">
+              <div class="text-center text-sm text-dark-300">
                 {{ category.name }}
               </div>
             </div>
@@ -49,7 +49,7 @@
         <TopStores />
       </div>
 
-      <div v-else class="flex flex-col gap-6 ion-padding">
+      <div v-else class="ion-padding flex flex-col gap-6">
         {{ searchText }}
       </div>
     </ion-content>
@@ -72,7 +72,7 @@ import img2 from "@/assets/images/img2.jpeg";
 import img3 from "@/assets/images/img3.jpeg";
 import img4 from "@/assets/images/img4.webp";
 
-import TopStores from "@/components/Store/TopStores";
+import TopStores from "@/components/Store/TopStores.vue";
 
 import { reactive, ref } from "vue";
 

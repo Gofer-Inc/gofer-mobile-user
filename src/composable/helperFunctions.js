@@ -2,6 +2,9 @@
 import { Toast } from "@capacitor/toast";
 import { Clipboard } from "@capacitor/clipboard";
 import { Share } from "@capacitor/share";
+import { useDataStore } from "@/stores/data";
+import { Browser } from "@capacitor/browser";
+import dayjs from 'dayjs'
 
 export const helperFunctions = {
   truncateAmount(amount) {
@@ -69,6 +72,13 @@ export const helperFunctions = {
     }
   },
 
+  validatePassword(password){
+    if(password){
+      const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d\s])[\s\S]{8,}$/;
+      return regex.test(password);
+    }
+  },
+
   validatePhone(phone) {
     // if (phone.trim() == "") {
     //   return false;
@@ -93,63 +103,33 @@ export const helperFunctions = {
   },
 
   
-  formatDateString(date, arg) {
-    let formattedDate;
-    const months = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
-    ];
-
-    if (date && date.length > 0 && date !== "N/A") {
-      let dd = date.slice(8, 10);
-      let mm = date.slice(5, 7);
-
-      let yyyy = date.slice(0, 4);
-      // if (dd < 10) {
-      //   dd = "0" + dd;
-      // }
-      // if (mm < 10) {
-      //   mm = "0" + mm;
-      // }
-      formattedDate =
-        arg === "name"
-          ? months[parseInt(mm.toString())] + " " + dd + ", " + yyyy
-          : dd + "/" + mm + "/" + yyyy;
-    } else {
-      formattedDate = "N/A";
-    }
-
-    return formattedDate;
+  formatDate(date) {
+    return dayjs(date).format('DD/MMM/YYYY')
   },
 
 
-  async showToast(text, position = "bottom") {
-    await Toast.show({
-      text: text,
-      position,
-    });
+  async showToast(type, message, duration = 3000) {
+   
+    const store = useDataStore()
+    store.setToast({
+      isOpen:true,
+      type: type.toLowerCase(),
+      message,
+      duration
+    })
   },
 
-  async copyText(text, message) {
+  async copyText(text, message = 'Copied to clipboard') {
+    const store = useDataStore()
     await Clipboard.write({
       string: text,
     });
 
-    await Toast.show({
-      text: message,
-      duration: "long",
-      position: "bottom",
-    });
+    store.setToast({
+      isOpen:true,
+      type : 'success',
+      message
+    })
   },
 
   async shareText({ title, text, url, dialogTitle, files }) {
@@ -172,6 +152,22 @@ export const helperFunctions = {
     });
   
     e.preventDefault();
-  }
+  },
+
+  async openBrowser(url, style, action ) {
+    Browser.removeAllListeners()
+    style = style == '' | style == undefined ? 'fullscreen' : style
+    // const toolbarColor ='#094938'
+   await Browser.open({ url, presentationStyle: style });
+   Browser.addListener('browserFinished', action)
+  },
+
+  async openLiveChat() {
+    await Browser.open({
+      url: "https://jivo.chat/ZfJMQ6q8Km",
+      presentationStyle: "fullscreen",
+      windowName: "Live Chat With Us",
+    });
+  },
 
 };

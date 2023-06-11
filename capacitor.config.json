@@ -1,12 +1,13 @@
-
 {
-	"appId": "io.ionic.starter",
+	"appId": "ng.gofer.business",
 	"appName": "Gofer",
 	"webDir": "dist",
 	  
   "plugins":{
 		"SplashScreen": {
-			"launchShowDuration": 0
+			"launchShowDuration": 0,
+			"launchAutoHide": true,
+			"androidSplashResourceName": "launch_splash"
 		},
 
 		"Keyboard": {
@@ -18,8 +19,8 @@
 			"cleartext": true,
 			"hostname": "localhost:8100",
 			"androidScheme": "http"
+			
 		}
 	}
 }
-
 

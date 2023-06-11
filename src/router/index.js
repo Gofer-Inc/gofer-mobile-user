@@ -62,6 +62,14 @@ const routes = [
     component: () => import('@/views/Help/SupportPage.vue'),
   },
 
+  //Order
+
+  {
+    path: '/order/:id',
+    name:'ViewOrder',
+    component: () => import('@/views/Orders/ViewOrder.vue')
+  },
+
   // Package Deliver Routes
   {
     path: '/delivery',
@@ -101,8 +109,9 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes
 })
+
 
 export default router

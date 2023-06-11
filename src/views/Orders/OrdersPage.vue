@@ -3,7 +3,7 @@
     <ion-header mode="ios" class="ion-no-border bg-white">
       <gNav :showBackButton="false">
         <div class="flex items-center justify-between gap-2 px-2 py-3">
-          <h2 class="text-2xl font-medium">My Orders</h2>
+          <h2 class="text-xl font-medium">My Orders</h2>
           <!-- <ion-buttons slot="end">
             <ion-button fill="clear">
               <ion-icon
@@ -42,11 +42,7 @@
         <div>
           <!-- <gTitle title="Upcoming Orders" /> -->
           <div class="flex flex-col gap-6 mt-4">
-            <PackageCard
-              v-for="item in packages"
-              :key="item._id"
-              :data="item"
-            />
+            <OrderCard v-for="item in packages" :key="item._id" :data="item" />
           </div>
         </div>
       </div>
@@ -58,7 +54,7 @@
 import { IonPage, IonHeader, IonContent } from "@ionic/vue";
 // import { chevronDown, filter, notifications } from "ionicons/icons";
 
-import PackageCard from "@/components/Delivery/PackageCard.vue";
+import OrderCard from "@/components/Order/OrderCard.vue";
 
 import { computed, ref } from "vue";
 

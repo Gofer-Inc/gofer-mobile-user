@@ -17,9 +17,9 @@
     <ion-content fullscreen>
       <!-- //// Step 1 ///// -->
       <div v-if="step === 'email'" class="ion-padding flex flex-col gap-4">
-        <div class="text-center pb-4 pt-2">
+        <div class="pb-4 pt-2 text-center">
           <h2 class="text-2xl text-dark-400">Reset Password</h2>
-          <p class="text-dark-200 mt-1 text-sm">
+          <p class="mt-1 text-sm text-dark-200">
             Enter your registered email and we will send you a reset
             instructionss
           </p>
@@ -48,15 +48,15 @@
 
       <!-- //// Step 2 ///// -->
       <div v-if="step === 'otp'" class="ion-padding flex flex-col gap-4">
-        <div class="text-center pb-4 pt-2">
+        <div class="pb-4 pt-2 text-center">
           <h2 class="text-2xl text-dark-400">OTP Code</h2>
-          <p class="text-dark-200 mt-1 text-sm">
+          <p class="mt-1 text-sm text-dark-200">
             Enter the 4-Digit code sent to you at
             <span class="font-medium">{{ args.email }}</span>
           </p>
         </div>
 
-        <div class="w-full mx-auto">
+        <div class="mx-auto w-full">
           <gOtp @input="args.code = $event" :error="errorRules.otp" />
         </div>
         <gButton
@@ -68,17 +68,17 @@
           >Continue</gButton
         >
 
-        <div class="text-dark-200 text-sm text-center py-4">
+        <div class="py-4 text-center text-sm text-dark-200">
           Didn’t receive code?
-          <span class="text-primary font-medium">Resend Code</span>
+          <span class="font-medium text-primary">Resend Code</span>
         </div>
       </div>
 
       <!-- //// Step 2 ///// -->
       <div v-if="step === 'password'" class="ion-padding flex flex-col gap-4">
-        <div class="text-center pb-4 pt-2">
+        <div class="pb-4 pt-2 text-center">
           <h2 class="text-2xl text-dark-400">Change Password</h2>
-          <p class="text-dark-200 mt-1 text-sm">
+          <p class="mt-1 text-sm text-dark-200">
             Enter a new an secure password
           </p>
         </div>
@@ -218,7 +218,7 @@ const resetPassword = async () => {
       });
 
       console.log(res);
-      showToast("Success");
+      showToast("success", "Password successfully updated");
       router.push({ name: "Login" });
       loading.value = false;
     } catch (error) {

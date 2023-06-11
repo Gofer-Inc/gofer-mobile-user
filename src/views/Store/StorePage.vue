@@ -45,12 +45,12 @@
         </div>
       </div>
     </gNav>
-    <ion-content fullscreen class="px-4">
+    <ion-content fullscreen class="ion-padding">
       <ion-refresher slot="fixed" @ionRefresh="reload($event)">
         <ion-refresher-content></ion-refresher-content>
       </ion-refresher>
 
-      <div class="grid grid-cols-1 gap-4">
+      <div class="grid grid-cols-1 gap-4 -mt-4">
         <StoreCategory />
         <HandPicked />
         <FeaturedStore />

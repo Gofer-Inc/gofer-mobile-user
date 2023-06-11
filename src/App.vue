@@ -1,10 +1,20 @@
 <template>
   <ion-app id="app">
     <ion-router-outlet />
+    <gToast />
   </ion-app>
 </template>
 
 <script setup>
+import "swiper/css";
+import "swiper/css/autoplay";
+import "swiper/css/keyboard";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import "swiper/css/scrollbar";
+import "swiper/css/zoom";
+import "@ionic/vue/css/ionic-swiper.css";
+
 import { IonApp, IonRouterOutlet } from "@ionic/vue";
 </script>
 
