@@ -1,23 +1,11 @@
 <template>
   <ion-page>
-    <gNav :showBackButton="false" title="Forgot Password">
-      <ion-buttons slot="start">
-        <ion-button
-          fill="clear"
-          @click="step == 'email' ? $router.go(-1) : goBack()"
-        >
-          <ion-icon
-            class="text-dark-300"
-            slot="icon-only"
-            :icon="chevronBack"
-          ></ion-icon
-        ></ion-button>
-      </ion-buttons>
-    </gNav>
+    <gNav title="Forgot Password" :onClick="handleBackButton" />
+
     <ion-content fullscreen>
       <!-- //// Step 1 ///// -->
       <div v-if="step === 'email'" class="ion-padding flex flex-col gap-4">
-        <div class="pb-4 pt-2 text-center">
+        <div class="pb-2 text-center">
           <h2 class="text-2xl text-dark-400">Reset Password</h2>
           <p class="mt-1 text-sm text-dark-200">
             Enter your registered email and we will send you a reset
@@ -28,7 +16,7 @@
         <form
           autocomplete="on"
           @submit.prevent="sendOtp"
-          class="flex flex-col gap-6"
+          class="flex flex-col gap-2"
         >
           <gInput
             v-model="args.email"
@@ -39,16 +27,12 @@
             autocomplete
             :error="errorRules.email"
           />
-
-          <gButton :loading="loading" type="submit" block
-            >Reset Password</gButton
-          >
         </form>
       </div>
 
       <!-- //// Step 2 ///// -->
       <div v-if="step === 'otp'" class="ion-padding flex flex-col gap-4">
-        <div class="pb-4 pt-2 text-center">
+        <div class="pb-2 text-center">
           <h2 class="text-2xl text-dark-400">OTP Code</h2>
           <p class="mt-1 text-sm text-dark-200">
             Enter the 4-Digit code sent to you at
@@ -59,16 +43,8 @@
         <div class="mx-auto w-full">
           <gOtp @input="args.code = $event" :error="errorRules.otp" />
         </div>
-        <gButton
-          @click="verifyOtp"
-          :loading="loading"
-          :disabled="args.code.length !== 4"
-          type="submit"
-          block
-          >Continue</gButton
-        >
 
-        <div class="py-4 text-center text-sm text-dark-200">
+        <div class="text-center text-xs text-dark-200">
           Didn’t receive code?
           <span class="font-medium text-primary">Resend Code</span>
         </div>
@@ -76,7 +52,7 @@
 
       <!-- //// Step 2 ///// -->
       <div v-if="step === 'password'" class="ion-padding flex flex-col gap-4">
-        <div class="pb-4 pt-2 text-center">
+        <div class="pb-2 text-center">
           <h2 class="text-2xl text-dark-400">Change Password</h2>
           <p class="mt-1 text-sm text-dark-200">
             Enter a new an secure password
@@ -86,7 +62,7 @@
         <form
           autocomplete="on"
           @submit.prevent="resetPassword"
-          class="flex flex-col gap-6"
+          class="flex flex-col gap-2"
         >
           <gInput
             v-model="args.password"
@@ -109,13 +85,22 @@
             @keyup="checkIfPasswordMatch"
             @prependAction="showPassword = !showPassword"
           />
-
-          <gButton :loading="loading" type="submit" block
-            >Change Password</gButton
-          >
         </form>
       </div>
     </ion-content>
+
+    <gFooter>
+      <div class="ion-padding mb-4 grid grid-cols-1 gap-3">
+        <gButton
+          :disabled="step == 'otp' && args.code.length !== 4"
+          @click="handleButtonClick"
+          :loading="loading"
+          block
+        >
+          {{ buttonTitle }}
+        </gButton>
+      </div>
+    </gFooter>
   </ion-page>
 </template>
 
@@ -143,6 +128,7 @@ const router = useRouter();
 const loading = ref(false);
 const showPassword = ref(false);
 const step = ref("email");
+const buttonTitle = ref("Reset Password");
 
 const args = reactive({
   email: "",
@@ -165,6 +151,7 @@ const checkIfPasswordMatch = () => {
     errorRules.confirmPassword = false;
   }
 };
+
 const validation = () => {
   if (args.email.trim() == "" && step.value == "email") {
     errorRules.email = "Please fill in your email";
@@ -187,6 +174,26 @@ const validation = () => {
   }
 };
 
+const handleButtonClick = () => {
+  if (step.value == "email") {
+    sendOtp();
+  } else if (step.value == "otp") {
+    verifyOtp();
+  } else if (step.value == "password") {
+    resetPassword();
+  }
+};
+
+const handleBackButton = () => {
+  if (step.value == "email") {
+    router.go(-1);
+  } else {
+    step.value = step.value == "password" ? "otp" : "email";
+    buttonTitle.value =
+      step.value == "password" ? "Continue" : "Reset Password";
+  }
+};
+
 const sendOtp = async () => {
   if (validation()) {
     loading.value = true;
@@ -199,6 +206,7 @@ const sendOtp = async () => {
 
       console.log(res);
       step.value = "otp";
+      buttonTitle.value = "Continue";
       loading.value = false;
     } catch (error) {
       loading.value = false;
@@ -229,6 +237,7 @@ const resetPassword = async () => {
 
 const verifyOtp = () => {
   step.value = "password";
+  buttonTitle.value = "Create Password";
 };
 
 const goBack = () => {

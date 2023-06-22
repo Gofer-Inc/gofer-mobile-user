@@ -1,133 +1,60 @@
 <template>
-  <div class="relative" :class="error || hint ? 'mb-4' : ''">
-    <ion-item ref="item" class="textInput text-heading">
-      <ion-label v-if="appendIcon" class="textInput mt-4">
-        <ion-icon
-          class="text-xl"
-          color="medium"
-          :icon="allIcons[appendIcon]"
-          @click="appendAction"
-        ></ion-icon>
-      </ion-label>
-      <input
-        v-if="page == 'loan'"
-        :class="`${
-          error
-            ? 'border-error focus:border-error'
-            : 'border-medium focus:border-primary focus:ring-primary'
-        } ${large ? 'text-2xl font-bold' : ''}`"
-        class="focus:outline-none"
-        :value="formatAmount"
-        :readonly="readonly"
-        :inputmode="inputmode"
-        :placeholder="placeholder"
-        :name="name"
-        :type="type"
-        :required="required"
-        :disabled="disabled"
-        :maxlength="maxlength"
-        :minlength="minlength"
-        :autocomplete="autocomplete"
-        :autocorrect="autocorrect"
-        :autofocus="autofocus"
-        @blur="inputFocus = false"
-        @focus="inputFocus = true"
-        @input="updateField($event)"
-      />
-
-      <ion-input
-        v-else
-        :value="formatAmount"
-        :placeholder="placeholder"
-        @ionInput="updateField($event)"
-        @ionBlur="inputFocus = false"
-        @ionFocus="inputFocus = true"
-        :name="name"
-        :type="type"
-        :autocomplete="autocomplete"
-        :autocorrect="autocorrect"
-        :autofocus="autofocus"
-        :readonly="readonly"
-        :required="required"
-        :spellcheck="spellcheck"
-        :disabled="disabled"
-        :enterkeyhint="enterkeyhint"
-        :inputmode="inputmode"
-        :maxlength="maxlength"
-        :minlength="minlength"
-        class="textInput"
-      ></ion-input>
-
-      <ion-label
-        style="margin-bottom: 0px; margin-top: 0px"
-        v-if="showCloseIcon"
-        class="textInput"
-      >
-        <ion-icon
-          :class="inputmode == 'search' ? 'text-2xl' : 'text-xl'"
-          color="medium"
-          :icon="allIcons[prependIcon]"
-          @click="prependAction"
-        ></ion-icon>
-      </ion-label>
-      <ion-label
-        v-if="clearInput && modelValue.trim() !== ''"
-        style="margin-bottom: 0.1px"
-        class="textInput"
-      >
-        <ion-icon
-          style="margin-top: -1px"
-          class="text-2xl"
-          color="primary"
-          :icon="allIcons['close']"
-          @click="resetField"
-        ></ion-icon>
-      </ion-label>
-    </ion-item>
+  <div class="relative">
+    <ion-input
+      ref="input"
+      fill="solid"
+      mode="ios"
+      label-placement="floating"
+      :label="label"
+      color="primary"
+      :type="handleType"
+      :name="name"
+      :inputmode="inputmode"
+      :spellcheck="spellcheck"
+      :helper-text="error ? error : hint"
+      :disabled="disabled"
+      :autocomplete="autocomplete"
+      autocapitalize="off"
+      :autocorrect="autocorrect"
+      :autofocus="autofocus"
+      :readonly="readonly"
+      :required="required"
+      :maxlength="maxlength"
+      :minlength="minlength"
+      :max="max"
+      :min="min"
+      :enterkeyhint="enterkeyhint"
+      error-text="Invalid email"
+      :clear-input="clearInput"
+      @ionInput="updateField($event)"
+      @ionBlur="markTouched"
+      :value="formatAmount"
+      class="custom text-dark-600 text-sm"
+    ></ion-input>
+    <ion-progress-bar
+      v-if="loading"
+      color="secondary"
+      type="indeterminate"
+      class="-mt-3"
+    ></ion-progress-bar>
 
     <div
-      v-if="error"
-      class="absolute text-xs font-medium text-error left-1 mt-1"
+      v-if="type == 'password'"
+      @click="showPassword = !showPassword"
+      class="absolute right-0 top-7 z-50 cursor-pointer bg-white pl-1 pt-[2.5px]"
     >
-      {{ error }}
-    </div>
-    <div
-      v-if="hint && !error"
-      style="text-transform: none"
-      class="absolute text-xs font-medium text-warning left-1 my-1"
-    >
-      {{ hint }}
-    </div>
-
-    <div
-      class="borderClass pointer-events-none absolute top-0 left-0 w-full h-full p-4 z-10"
-    ></div>
-
-    <div
-      v-if="label"
-      :class="labelStyle"
-      class="labelClass absolute z-10 pointer-events-none"
-    >
-      <div class="w-full h-full relative">
-        {{ label }}
-        <span
-          v-if="inputFocus || modelValue"
-          style="width: 110%; z-index: -2; margin-top: -4px"
-          class="borderLine absolute top-1/2 -left-1 border-4 border-white"
-        ></span>
-      </div>
+      <ion-icon
+        style="margin-top: -1px"
+        class="text-xl"
+        color="primary"
+        :icon="allIcons[showPassword ? 'eyeOutline' : 'eyeOffOutline']"
+      ></ion-icon>
     </div>
   </div>
 </template>
 
 <script>
-import {
-  IonItem,
-  // IonNote,
-  IonLabel,
-  IonIcon,
-  IonInput,
-} from "@ionic/vue";
+import { IonInput, IonIcon, IonProgressBar } from "@ionic/vue";
 
 import * as allIcons from "ionicons/icons";
 import { addIcons } from "ionicons";
@@ -138,11 +65,6 @@ export default {
     modelValue: {
       type: [String, Number],
       default: "",
-    },
-
-    page: {
-      type: String,
-      default: "default",
     },
     format: {
       type: Boolean,
@@ -172,6 +94,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    loading: {
+      type: Boolean,
+      default: false,
+    },
     required: {
       type: Boolean,
       default: false,
@@ -181,16 +107,24 @@ export default {
       default: undefined,
     },
     maxlength: {
-      type: Number,
+      type: [Number, String],
       default: undefined,
     },
     minlength: {
-      type: Number,
+      type: [Number, String],
+      default: undefined,
+    },
+    max: {
+      type: [Number, String],
+      default: undefined,
+    },
+    min: {
+      type: [Number, String],
       default: undefined,
     },
     label: {
-      type: [String, Boolean],
-      default: false,
+      type: String,
+      default: "",
     },
     appendIcon: {
       type: [String, Boolean],
@@ -225,112 +159,58 @@ export default {
       type: [String, Boolean],
       default: "primary",
     },
-    helper: {
-      type: [String, Boolean],
-      default: false,
-    },
     error: {
-      type: [String, Boolean],
+      type: [String, Boolean, Number],
       default: false,
     },
     hint: {
       type: [String, Boolean],
-      default: false,
+      default: " ",
     },
   },
 
   components: {
-    IonItem,
-    // IonNote,
-    IonLabel,
-    IonIcon,
     IonInput,
+    IonIcon,
   },
 
-  emit: ["appendAction", "prependAction"],
-
   setup(props) {
-    const text = ref("");
-    const inputFocus = ref(false);
-
-    const showCloseIcon = computed(() => {
-      let state;
-      if (props.prependIcon) {
-        if (props.clearInput && String(props.modelValue).trim() !== "") {
-          state = false;
-        } else {
-          state = true;
-        }
-      } else {
-        state = false;
-      }
-
-      return state;
-    });
-
-    const labelStyle = computed(() => {
-      let style;
-
-      if (props.appendIcon) {
-        if (inputFocus.value) {
-          style = "left-11 -top-3 p-1 text-sm ";
-        } else {
-          if (String(props.modelValue).trim() === "") {
-            style = "left-11 top-1/2 transform -translate-y-1/2";
-          } else {
-            style = "left-11 -top-3 p-1 text-sm ";
-          }
-        }
-      } else {
-        if (inputFocus.value) {
-          style = "left-4 -top-3 p-1 text-sm ";
-        } else {
-          if (String(props.modelValue).trim() === "") {
-            style = "left-4 top-1/2 transform -translate-y-1/2";
-          } else {
-            style = "left-4 -top-3 p-1 text-sm ";
-          }
-        }
-      }
-
-      return style;
-    });
-
-    const colorName = computed(() => {
-      if (props.error) {
-        return inputFocus.value
-          ? `var(--ion-color-danger)`
-          : `var(--ion-color-danger)`;
-      } else if (props.disabled) {
-        return `var(--ion-color-light-shade)`;
-      } else {
-        return inputFocus.value
-          ? `var(--ion-color-${props.color})`
-          : `var(--ion-color-medium-tint)`;
-      }
-    });
+    const showPassword = ref(false);
 
     onMounted(() => {
       // Register all icons globally
       addIcons(allIcons);
     });
 
+    const handleType = computed(() => {
+      if (props.type == "password") {
+        return showPassword.value ? "text" : "password";
+      } else {
+        return props.type;
+      }
+    });
+
+    const hintColor = computed(() => {
+      if (props.error) {
+        return `var(--ion-color-danger)`;
+      } else {
+        `var(--ion-color-medium-tint)`;
+      }
+    });
+
     return {
-      text,
-      inputFocus,
-      colorName,
-      labelStyle,
       allIcons,
-      showCloseIcon,
+      hintColor,
+      showPassword,
+      handleType,
     };
   },
+
   computed: {
     formatAmount() {
       if (this.format) {
         let val = this.modelValue;
-        val = this.removeAlphabet(val);
-
-        val = parseInt(val);
+        val = parseFloat(val);
         val = val.toLocaleString();
 
         if (val === "NaN") {
@@ -343,12 +223,14 @@ export default {
       }
     },
   },
+
   methods: {
     updateField(e) {
       let amount = e.target.value;
 
       if (this.format) {
         amount = this.removeAlphabet(amount);
+        e.target.value = amount;
         const firstChar = amount.charAt(0);
         if (firstChar === "₦") {
           amount = amount.substring(1);
@@ -356,7 +238,7 @@ export default {
 
         if (amount !== null) {
           amount = amount.split(",").join("");
-          amount = parseInt(amount);
+          amount = parseFloat(amount);
         }
       }
 
@@ -364,66 +246,31 @@ export default {
     },
 
     removeAlphabet(arg) {
-      arg = arg.toString();
-      let regex = /[a-zA-Z]/g;
-      this.$emit("update:modelValue", arg.replace(regex, ""));
-      return arg.replace(regex, "");
+      if (arg) {
+        arg = arg.toString();
+        let regex = /[a-zA-Z]/g;
+        this.$emit("update:modelValue", arg.replace(regex, ""));
+        return arg.replace(regex, "");
+      }
     },
 
-    // markTouched() {
-    //   this.inputFocus = false;
-    //   // if (this.modelValue.trim() === "") {
-    //   // }
-    //   this.$refs.item.$el.classList.add("ion-touched");
-    // },
-
-    resetField() {
-      this.$emit("update:modelValue", "");
-    },
-
-    appendAction() {
-      this.$emit("appendAction");
-    },
-    prependAction() {
-      this.$emit("prependAction");
+    markTouched() {
+      this.$refs.input.$el.classList.add("ion-touched");
     },
   },
 };
 </script>
 
-<style scope>
-.labelClass {
-  transition: top, font-size, 0.1s ease-in-out;
-  /* background-color: var(--ion-color-white); */
-  color: v-bind(colorName);
-}
-
-.borderClass {
-  border: 1.5px solid v-bind(colorName) !important;
-  border-radius: 12px !important;
-}
-
-ion-item.textInput {
-  border: none !important;
-  border-radius: 12px !important;
-  --border-color: #ffffff;
-  /* caret-color: var(--ion-color-medium) !important; */
-  padding-top: 2px !important;
-  padding-bottom: -1px !important;
-}
-
-ion-input.textInput {
-  --border-color: v-bind(colorName);
+<style>
+ion-input.custom {
   --padding-start: 0px !important;
-  display: flex !important;
 }
 
-ion-item.textInput.item-has-focus {
-  /* --highlight-background: #ffffff; */
-  --border-color: #ffffff;
+ion-input.custom .helper-text {
+  color: v-bind(hintColor) !important;
+  line-height: 1rem;
 }
-
-ion-label.textInput {
-  pointer-events: all !important;
+ion-input.custom.has-focus .label-text {
+  color: var(--ion-color-primary) !important;
 }
 </style>

@@ -19,16 +19,16 @@
         <ion-segment
           mode="ios"
           :value="currentTab"
-          class="custom p-1"
+          class="custom p-[1px]"
           @ionChange="onChange"
         >
-          <ion-segment-button value="ongoing" class="custom p-1">
+          <ion-segment-button value="ongoing" class="custom p-[1px]">
             <ion-label class="flex items-center gap-1">
               <ion-icon :icon="bicycle"></ion-icon>
               Ongoing</ion-label
             >
           </ion-segment-button>
-          <ion-segment-button value="Completed" class="custom p-1">
+          <ion-segment-button value="Completed" class="custom p-[1px]">
             <ion-label class="flex items-center gap-1">
               <ion-icon :icon="walk"></ion-icon>
               Completed</ion-label
@@ -38,10 +38,10 @@
       </div>
     </ion-header>
     <ion-content fullscreen>
-      <div class="flex flex-col gap-6 ion-padding">
+      <div class="ion-padding flex flex-col gap-6">
         <div>
           <!-- <gTitle title="Upcoming Orders" /> -->
-          <div class="flex flex-col gap-6 mt-4">
+          <div class="mt-4 flex flex-col gap-6">
             <OrderCard v-for="item in packages" :key="item._id" :data="item" />
           </div>
         </div>

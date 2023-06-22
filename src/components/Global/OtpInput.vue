@@ -11,7 +11,7 @@
               ? 'border-error focus:border-error'
               : 'border-medium focus:border-primary focus:ring-primary'
           } ${inputClass}`"
-          class="custom bg-white w-10 h-10 border text-center text-lg rounded-md font-medium text-heading focus:outline-none"
+          class="custom text-heading h-10 w-10 rounded-md border bg-white text-center text-lg font-medium focus:outline-none"
           @input="$emit('input', $event.target.value)"
           @keyup="otpInputKeyDown($event, i.id)"
           inputmode="numeric"
@@ -24,7 +24,7 @@
         />
       </ion-col>
     </ion-row>
-    <ion-row v-if="error" class="-mt-1 text-error text-xs">
+    <ion-row v-if="error" class="-mt-1 text-xs text-error">
       <ion-col> {{ error }} </ion-col>
     </ion-row>
   </ion-grid>
@@ -49,7 +49,7 @@ const props = defineProps({
   placeholder: String,
   tokenLength: {
     type: [String, Number],
-    default: 4,
+    default: 6,
   },
   text: String,
   type: {

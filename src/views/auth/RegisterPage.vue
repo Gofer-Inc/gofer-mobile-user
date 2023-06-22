@@ -1,31 +1,25 @@
 <template>
   <ion-page>
-    <gNav :showBackButton="false" title="Sign Up">
-      <ion-buttons slot="start">
-        <ion-button
-          fill="clear"
-          @click="step == 'email' ? $router.go(-1) : goBack()"
-        >
-          <ion-icon
-            class="text-dark-300"
-            slot="icon-only"
-            :icon="chevronBack"
-          ></ion-icon
-        ></ion-button>
-      </ion-buttons>
-    </gNav>
+    <gNav title="Sign Up" :onClick="handleBackButton" />
     <ion-content fullscreen>
       <!-- //// Step 1 ///// -->
       <div v-if="step === 'email'" class="ion-padding flex flex-col gap-4">
-        <div class="pb-4 pt-2 text-center">
+        <div class="text-center">
           <h2 class="text-2xl text-dark-400">Create Account</h2>
-          <p class="mt-1 text-sm text-dark-200">Enter a valid email address</p>
+          <p class="mt-2 text-center text-sm text-dark-200">
+            Already have account?
+            <span
+              class="font-medium text-primary"
+              @click="$router.push({ name: 'Login' })"
+              >Login</span
+            >
+          </p>
         </div>
 
         <form
           autocomplete="on"
           @submit.prevent="signUp"
-          class="flex flex-col gap-6"
+          class="flex flex-col gap-2"
         >
           <gInput
             v-model="args.email"
@@ -36,23 +30,12 @@
             autocomplete
             :error="errorRules.email"
           />
-
-          <gButton :loading="loading" type="submit" block>Next</gButton>
         </form>
-
-        <div class="py-4 text-center text-sm text-dark-200">
-          Already have account?
-          <span
-            class="font-medium text-primary"
-            @click="$router.push({ name: 'Login' })"
-            >Login</span
-          >
-        </div>
       </div>
 
       <!-- //// Step 2 ///// -->
       <div v-if="step === 'otp'" class="ion-padding flex flex-col gap-4">
-        <div class="pb-4 pt-2 text-center">
+        <div class="pb-2 text-center">
           <h2 class="text-2xl text-dark-400">Verify Email</h2>
           <p class="mt-1 text-sm font-medium text-dark-200">
             Enter the 4-Digit code sent to you at {{ args.email }}
@@ -62,16 +45,8 @@
         <div class="mx-auto w-full">
           <gOtp @input="otpCode = $event" :error="errorRules.otp" />
         </div>
-        <gButton
-          @click="verifyEmail"
-          :loading="loading"
-          :disabled="otpCode.length !== 4"
-          type="submit"
-          block
-          >Continue</gButton
-        >
 
-        <div class="py-4 text-center text-sm text-dark-200">
+        <div class="text-center text-xs text-dark-200">
           Didn’t receive code?
           <span class="font-medium text-primary">Resend Code</span>
         </div>
@@ -79,17 +54,25 @@
 
       <!-- //// Step 2 ///// -->
       <div v-if="step === 'personal'" class="ion-padding flex flex-col gap-4">
-        <div class="pb-4 pt-2 text-center">
+        <div class="text-center">
           <h2 class="text-2xl text-dark-400">Create Account</h2>
-          <p class="mt-1 text-sm text-dark-200">
+          <!-- <p class="mt-1 text-sm text-dark-200">
             Enter your Name, Phone Number and Password for sign up.
+          </p> -->
+          <p class="mt-2 text-center text-sm text-dark-200">
+            Already have account?
+            <span
+              class="font-medium text-primary"
+              @click="$router.push({ name: 'Login' })"
+              >Login</span
+            >
           </p>
         </div>
 
         <form
           autocomplete="on"
           @submit.prevent="completeSignup"
-          class="flex flex-col gap-6"
+          class="flex flex-col gap-2"
         >
           <gInput
             v-model="args.firstName"
@@ -125,26 +108,28 @@
             required
             @prependAction="showPassword = !showPassword"
           />
-
-          <gButton :loading="loading" type="submit" block>Next</gButton>
         </form>
-
-        <div class="py-4 text-center text-sm text-dark-200">
-          Already have account?
-          <span
-            class="font-medium text-primary"
-            @click="$router.push({ name: 'Login' })"
-            >Login</span
-          >
-        </div>
-      </div>
-
-      <div class="mx-6 text-center text-sm text-dark-200">
-        By Signing up, you agree to our
-        <span class="font-medium text-primary">Terms Conditions </span> &
-        <span class="font-medium text-primary">Privacy Policy </span>
       </div>
     </ion-content>
+
+    <gFooter>
+      <div class="ion-padding grid grid-cols-1 gap-3">
+        <gButton
+          :disabled="step == 'otp' && otpCode.length !== 4"
+          @click="handleButtonClick"
+          :loading="loading"
+          block
+        >
+          {{ step == "otp" ? "Continue" : "Next" }}
+        </gButton>
+
+        <div class="mx-6 pt-2 text-center text-xs text-dark-200">
+          By Signing up, you agree to our
+          <span class="font-medium text-primary">Terms Conditions </span> &
+          <span class="font-medium text-primary">Privacy Policy </span>
+        </div>
+      </div>
+    </gFooter>
   </ion-page>
 </template>
 
@@ -176,7 +161,7 @@ const step = ref("email");
 const otpCode = ref("");
 
 const args = reactive({
-  email: "peteremmanuelwhyte@gmail.com",
+  email: "",
   firstName: "",
   lastName: "",
   phoneNumber: "",
@@ -233,6 +218,24 @@ const clearFields = () => {
   args.lastName = "";
   args.phoneNumber = "";
   args.password = "";
+};
+
+const handleButtonClick = () => {
+  if (step.value == "email") {
+    signUp();
+  } else if (step.value == "otp") {
+    verifyEmail();
+  } else if (step.value == "personal") {
+    completeSignup();
+  }
+};
+
+const handleBackButton = () => {
+  if (step.value == "email") {
+    router.go(-1);
+  } else {
+    step.value = step.value == "personal" ? "otp" : "email";
+  }
 };
 
 const signUp = async () => {
@@ -294,10 +297,6 @@ const completeSignup = async () => {
       loading.value = false;
     }
   }
-};
-
-const goBack = () => {
-  step.value = step.value == "personal" ? "otp" : "email";
 };
 </script>
 

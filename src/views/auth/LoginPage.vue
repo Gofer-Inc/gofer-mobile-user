@@ -2,13 +2,13 @@
   <ion-page>
     <gNav title="Sign in" />
     <ion-content fullscreen>
-      <div class="ion-padding flex flex-col gap-4">
-        <div class="text-center pb-4 pt-2">
+      <div class="ion-padding -mt-2 flex flex-col gap-4">
+        <div class="text-center">
           <h2 class="text-2xl text-dark-400">Welcome to Gofer</h2>
-          <p class="text-dark-200 mt-1 text-sm">Enter your email to sign in</p>
+          <p class="mt-1 text-sm text-dark-200">Enter your email to sign in</p>
         </div>
 
-        <form @submit.prevent="submit" class="flex flex-col gap-6">
+        <form @submit.prevent="submit" class="flex flex-col gap-2">
           <gInput
             v-model="args.email"
             label="Email"
@@ -23,28 +23,30 @@
             @prependAction="showPassword = !showPassword"
           />
 
-          <div class="flex flex-col gap-4">
-            <gButton block fill="clear" size="small">
-              <span
-                class="capitalize"
-                @click="$router.push({ name: 'ForgotPassword' })"
-                >Forget Password?</span
-              >
-            </gButton>
-            <gButton :loading="loading" type="submit" block>Login</gButton>
-          </div>
+          <gButton fill="clear" size="small" class="m-0">
+            <span
+              class="text-xs capitalize"
+              @click="$router.push({ name: 'ForgotPassword' })"
+              >Forget Password?</span
+            >
+          </gButton>
         </form>
+      </div>
+    </ion-content>
 
-        <div class="text-dark-200 text-sm text-center py-4">
+    <gFooter>
+      <div class="ion-padding grid grid-cols-1 gap-2">
+        <gButton :loading="loading" type="submit" block>Login</gButton>
+        <div class="py-4 text-center text-xs text-dark-200">
           Don’t have account?
           <span
-            class="text-primary font-medium"
+            class="font-medium text-primary"
             @click="$router.push({ name: 'Register' })"
             >Register</span
           >
         </div>
       </div>
-    </ion-content>
+    </gFooter>
   </ion-page>
 </template>
 
@@ -101,7 +103,6 @@ const submit = async () => {
   if (validation()) {
     loading.value = true;
     try {
-      
       const res = await http({
         endpoint: "SignIn",
         httpMethod: "post",

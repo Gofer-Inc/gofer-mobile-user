@@ -1,10 +1,6 @@
 <template>
-  <ion-footer
-    :class="spacing ? 'px-4' : ''"
-    v-if="show"
-    class="ion-no-border bg-white pb-6"
-  >
-    <ion-toolbar class="footer p-0 bg-white" color="white">
+  <ion-footer :class="['ion-no-border', `bg-${color}`]">
+    <ion-toolbar :color="color">
       <slot />
     </ion-toolbar>
   </ion-footer>
@@ -12,28 +8,13 @@
 
 <script setup>
 import { IonFooter, IonToolbar } from "@ionic/vue";
-import { Keyboard } from "@capacitor/keyboard";
-import { ref } from "vue";
 
 defineProps({
-  spacing: {
-    type: Boolean,
-    default: true,
+  color: {
+    type: String,
+    default: "white",
   },
-});
-const show = ref(true);
-
-Keyboard.addListener("keyboardWillShow", () => {
-  show.value = false;
-});
-
-Keyboard.addListener("keyboardDidHide", () => {
-  show.value = true;
 });
 </script>
 
-<style scope>
-/* ion-toolbar.footer {
-  padding: 0 !important;
-} */
-</style>
+<style></style>

@@ -29,6 +29,7 @@
     >
       <ion-buttons slot="start" v-if="showBackButton">
         <ion-back-button
+          @click="handleBackButton"
           :color="dark ? 'light' : 'medium'"
           class="Navbar text-sm"
           :text="backButtonText"
@@ -39,7 +40,7 @@
       <ion-title
         v-if="title.length"
         :class="dark ? `text-white` : 'text-heading'"
-        class="Navbar capitalize font-medium text-sm"
+        class="Navbar font-medium capitalize"
       >
         {{ title }}
       </ion-title>
@@ -60,8 +61,11 @@ import {
 import * as allIcons from "ionicons/icons";
 import { addIcons } from "ionicons";
 import { onMounted } from "vue";
+import { useRouter } from "vue-router";
 
-defineProps({
+const router = useRouter();
+
+const props = defineProps({
   type: {
     type: String,
     default: "header",
@@ -108,12 +112,25 @@ defineProps({
     type: Boolean,
     default: false,
   },
+
+  onClick: {
+    type: [Function, Boolean],
+    default: false,
+  },
 });
 
 onMounted(() => {
   // Register all icons globally
   addIcons(allIcons);
 });
+
+const handleBackButton = () => {
+  if (props.onClick) {
+    props.onClick();
+  } else {
+    router.go(-1);
+  }
+};
 </script>
 
 <style scoped>
