@@ -1,11 +1,11 @@
 <template>
   <div>
     <div class="text-sm">{{ title }}</div>
-    <div class="flex flex-wrap items-center gap-2 mt-2">
+    <div class="mt-2 flex flex-wrap items-center gap-2">
       <div
         v-for="(url, i) in imageUrls"
         :key="url"
-        class="w-24 h-24 border rounded-2xl overflow-hidden relative ion-activatable overflow-hidden"
+        class="ion-activatable relative h-24 w-24 overflow-hidden overflow-hidden rounded-2xl border"
       >
         <img :src="url" alt="" class="h-full w-full object-cover" />
 
@@ -31,13 +31,13 @@
 
       <div
         @click="$refs.input.click()"
-        class="ion-activatable overflow-hidden relative w-24 h-24 border border-dashed border-dark-100 rounded-2xl flex items-center justify-center"
+        class="ion-activatable relative flex h-24 w-24 items-center justify-center overflow-hidden rounded-2xl border border-dashed border-dark-100"
       >
         <ion-icon :icon="add" class="text-2xl" color="medium"></ion-icon>
         <ion-ripple-effect class="text-outline"></ion-ripple-effect>
       </div>
     </div>
-    <div class="text-error text-xs mt-2">{{ message }}</div>
+    <div class="mt-2 text-xs text-error">{{ message }}</div>
   </div>
 
   <input
@@ -64,7 +64,8 @@ const props = defineProps({
   },
 
   allowedTypes: {
-    default: ["jpg"],
+    type: Array,
+    default: () => ["jpg"],
   },
 
   hint: {

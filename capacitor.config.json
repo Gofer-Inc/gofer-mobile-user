@@ -4,11 +4,12 @@
 	"webDir": "dist",
 	  
   "plugins":{
-		"SplashScreen": {
-			"launchShowDuration": 0,
-			"launchAutoHide": true,
-			"androidSplashResourceName": "launch_splash"
-		},
+	"SplashScreen": {
+		"launchShowDuration": 0,
+		"backgroundColor": "#FFFFFF",
+		"launchAutoHide": true,
+		"androidSplashResourceName": "launch_splash"
+	},
 
 		"Keyboard": {
 			"resize": "body",
