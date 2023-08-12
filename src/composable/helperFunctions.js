@@ -21,6 +21,15 @@ export const helperFunctions = {
     }
   },
 
+  transformImage(url) {
+    let newURL = url;
+    const str = url.split(":");
+    if (str[0] == "http") {
+      newURL = url.replace(/http/gi, "https");
+    }
+    return newURL;
+  },
+
   formatAmount(amount) {
     try {
       if (

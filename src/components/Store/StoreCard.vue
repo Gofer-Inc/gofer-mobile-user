@@ -1,44 +1,47 @@
 <template>
   <ion-card
+    v-if="store"
     mode="ios"
-    class="custom mx-auto w-full relative max-w-sm rounded-2xl m-0 flex flex-col"
+    class="custom relative m-0 mx-auto flex w-full max-w-sm flex-col rounded-2xl"
   >
     <div
       @click="
         $emit('function'),
           $router.push({ name: 'ViewStore', params: { id: store.id } })
       "
-      class="relative bg-primary h-40 max-h-full flex-shrink-0 overflow-hidden rounded-2xl"
+      class="relative h-40 max-h-full flex-shrink-0 overflow-hidden rounded-2xl bg-light"
     >
       <img
         style="width: 100% !important; height: 100% !important"
-        :alt="store && store.name"
-        class="rounded-2xl h-full object-cover"
-        :src="store && store.cover"
+        :alt="store.name"
+        class="h-full rounded-2xl object-cover"
+        :src="
+          store.vendor && store.vendor.logoUrl ? store.vendor.logoUrl : dummy
+        "
       />
 
       <div
         v-if="closed && !simple"
-        class="absolute bg-dark-400 opacity-50 inset-0 z-20"
+        class="absolute inset-0 z-20 bg-dark-400 opacity-50"
       ></div>
       <div
         v-if="closed && !simple"
-        class="absolute inset-0 flex items-center justify-center gap-1 z-30"
+        class="absolute inset-0 z-30 flex items-center justify-center gap-1"
       >
         <ion-icon
           class="text-xl text-white"
           color=""
           :icon="closeCircleOutline"
         />
-        <span class="text-white text-base font-medium"> Close </span>
+        <span class="text-base font-medium text-white"> Close </span>
       </div>
     </div>
     <ion-card-content class="px-2 py-4">
       <div class="flex items-center justify-between">
         <span
           :class="closed ? 'text-dark-100' : 'text-dark-400'"
-          class="text-lg font-medium truncate"
-          >{{ store && store.name }}</span
+          class="truncate text-lg font-medium"
+          >{{ store.name }}</span
         >
         <ion-icon
           v-if="!simple"
@@ -52,23 +55,19 @@
       <div
         v-if="!simple"
         :class="closed ? 'text-dark-100' : 'text-dark-300'"
-        class="text-sm flex items-center gap-1 mt-1"
+        class="mt-1 flex items-center gap-1 text-sm"
       >
         <div class="flex items-center">
-          <span class="font-medium"
-            >{{ store && store.rating && store.rating.rate }}({{
-              store && store.rating && store.rating.number
-            }})</span
-          >
+          <span class="font-medium">{{ 4.3 }}({{ 200 }})</span>
           <ion-icon class="text-md" color="warning" :icon="star" />
         </div>
         <div class="flex items-center gap-1">
           <ion-icon class="text-md" :icon="timeOutline" />
-          <span>{{ store && store.averageDeliveryTime }}</span>
+          <span>{{ "30 Min" }}</span>
         </div>
         <div class="flex items-center gap-1">
           <ion-icon class="text-md" :icon="bicycle" />
-          <span
+          <!-- <span
             :class="
               store && store.delivery && store.delivery.free
                 ? 'text-primary font-bold'
@@ -79,17 +78,17 @@
                 ? "FREE"
                 : formatAmount(store && store.delivery && store.delivery.price)
             }}</span
-          >
+          > -->
         </div>
       </div>
     </ion-card-content>
 
     <div
-      v-if="store && store.discount"
-      class="rounded-md bg-orange-50 absolute right-4 top-6 bg-white shadow-md text-dark-400 text-xs font-medium p-2"
+      v-if="false"
+      class="absolute right-4 top-6 rounded-md bg-orange-50 bg-white p-2 text-xs font-medium text-dark-400 shadow-md"
     >
       <ion-icon color="primary" :icon="giftOutline"></ion-icon>
-      <span> Up to {{ store && store.discount.percent }}% off</span>
+      <span> Up to 10% off</span>
     </div>
   </ion-card>
 </template>
@@ -122,41 +121,7 @@ import { helperFunctions } from "@/composable/helperFunctions";
 const { formatAmount } = helperFunctions;
 
 const props = defineProps({
-  store: {
-    type: Object,
-    default: () => ({
-      name: "Chicken Republic",
-
-      contact: {
-        state: "Bayelsa",
-        address: "Kpansia, Beside God is Good Motors, Mbiama – Yenagoa Road",
-        phoneNumber: "09088978929",
-        email: "info@chicken-republic.com",
-        website: "https://chicken-republic.com",
-      },
-      storeClosed: false,
-      workingHours: {
-        opening: 8,
-        closing: 18,
-      },
-      favourite: false,
-      cover: dummy,
-      discount: {
-        amount: 0,
-        percent: 20,
-        code: "BADJD",
-      },
-      rating: {
-        rate: 4.3,
-        number: 200,
-      },
-      delivery: {
-        free: false,
-        price: 400,
-      },
-      averageDeliveryTime: "25 Min",
-    }),
-  },
+  store: Object,
 
   simple: {
     type: Boolean,
@@ -168,16 +133,16 @@ defineEmits("function");
 
 const closed = computed(() => {
   let isClose = false;
-  const currentHour = new Date().getHours();
+  // const currentHour = new Date().getHours();
 
-  const openingHour = props.store && props.store.workingHours.opening;
-  const closingHour = props.store && props.store.workingHours.closing;
+  // const openingHour = props.store && props.store.workingHours.opening;
+  // const closingHour = props.store && props.store.workingHours.closing;
 
-  if (props.store && props.store.storeClosed) {
-    isClose = true;
-  } else if (currentHour >= closingHour || currentHour < openingHour) {
-    isClose = true;
-  }
+  // if (props.store && props.store.storeClosed) {
+  //   isClose = true;
+  // } else if (currentHour >= closingHour || currentHour < openingHour) {
+  //   isClose = true;
+  // }
   //   isClose = false;
 
   return isClose;

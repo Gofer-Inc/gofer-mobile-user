@@ -1,10 +1,10 @@
 <template>
-  <div class="ion-padding bg-white rounded-t-xl shadow-xl overflow-hidden">
+  <div class="ion-padding overflow-hidden rounded-t-xl bg-white shadow-xl">
     <div
-      class="mx-auto w-12 p-[2px] cursor-pointer bg-dark-100 rounded-full -mt-1"
+      class="mx-auto -mt-1 w-12 cursor-pointer rounded-full bg-dark-100 p-[2px]"
     ></div>
     <gTitle
-      title="Stores near you"
+      title="Featured stores"
       icon="storefront"
       iconColor="primary"
       text="See all"
@@ -13,7 +13,7 @@
     <div class="flex flex-col gap-4">
       <StoreCard
         @function="$emit('close')"
-        v-for="(store, i) in nearyou"
+        v-for="(store, i) in restaurants"
         :key="i"
         :store="store"
       />
@@ -23,12 +23,15 @@
 
 <script setup>
 // import { IonContent } from "@ionic/vue";
-import storeDB from "@/utils/stores.js";
-import { computed } from "vue";
-
 import StoreCard from "@/components/Store/StoreCard.vue";
+import storeDB from "@/utils/stores.js";
 
-const nearyou = computed(() => storeDB.slice(0, 4));
+import { inject, computed } from "vue";
+import { useDataStore } from "@/stores/data.js";
+
+const store = useDataStore();
+
+const restaurants = computed(() => store.restaurants.slice(0, 4));
 
 defineEmits(["close"]);
 </script>

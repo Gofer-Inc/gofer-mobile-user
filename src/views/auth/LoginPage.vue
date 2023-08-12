@@ -56,10 +56,9 @@ import {
   //   IonHeader,
   IonContent,
 } from "@ionic/vue";
-import { reactive, ref } from "vue";
+import { reactive, ref, inject } from "vue";
 import { helperFunctions } from "@/composable/helperFunctions";
 import { useRouter } from "vue-router";
-import { inject } from "vue";
 import { Preferences } from "@capacitor/preferences";
 import { useDataStore } from "@/stores/data";
 

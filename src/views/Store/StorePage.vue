@@ -2,12 +2,12 @@
   <ion-page>
     <gNav :showBackButton="false">
       <div
-        class="relative flex items-center justify-between p-2 text-dark-300 py-3"
+        class="relative flex items-center justify-between p-2 py-3 text-dark-300"
       >
         <div class="flex flex-col text-base">
           <div
             @click="$router.push({ name: 'Start' })"
-            class="text-primary text-xs font-medium flex items-center gap-1"
+            class="flex items-center gap-1 text-xs font-medium text-primary"
           >
             <ion-icon class="" color="primary" :icon="chevronBack"></ion-icon>
             <span>Restaurant </span>
@@ -16,10 +16,10 @@
 
         <div
           @click="addressModal = true"
-          class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center text-xs gap-1"
+          class="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 transform items-center gap-1 text-xs"
         >
           <ion-icon color="secondary" :icon="location"></ion-icon>
-          <span class="text-dark-400 font-medium">Yenagoa</span>
+          <span class="font-medium text-dark-400">Yenagoa</span>
           <ion-icon class="" :icon="chevronDown"></ion-icon>
         </div>
 
@@ -34,11 +34,11 @@
             ></ion-button>
             <ion-button
               fill="clear"
-              class="relative animate__animated animate__rubberBand animate__delay-4s animate__infinite"
+              class="animate__animated animate__rubberBand animate__delay-4s animate__infinite relative"
             >
               <ion-icon color="primary" :icon="gift"></ion-icon>
               <div
-                class="absolute bg-secondary p-1 rounded-full -right-1 top-1 border-2 border-white"
+                class="absolute -right-1 top-1 rounded-full border-2 border-white bg-secondary p-1"
               ></div>
             </ion-button>
           </ion-buttons>
@@ -50,10 +50,10 @@
         <ion-refresher-content></ion-refresher-content>
       </ion-refresher>
 
-      <div class="grid grid-cols-1 gap-4 -mt-4">
+      <div class="-mt-4 grid grid-cols-1 gap-4">
         <StoreCategory />
-        <HandPicked />
-        <FeaturedStore />
+        <!-- <HandPicked />
+        <FeaturedStore /> -->
 
         <div>
           <gTitle title="All Restaurants" />
@@ -80,6 +80,8 @@ import {
   IonPage,
   IonContent,
   IonIcon,
+  IonButtons,
+  IonButton,
   IonRefresher,
   IonRefresherContent,
   IonInfiniteScroll,
@@ -102,12 +104,14 @@ import StoreCard from "@/components/Store/StoreCard.vue";
 import { Geolocation } from "@capacitor/geolocation";
 
 import { computed, ref } from "vue";
+import { useDataStore } from "@/stores/data.js";
 
+const store = useDataStore();
 const addressModal = ref(false);
 
 const visibleStores = ref([]);
 const storesIndex = ref(5);
-const allStores = computed(() => storeDB);
+const allStores = computed(() => store.restaurants);
 
 const printCurrentPosition = async () => {
   const coordinates = await Geolocation.getCurrentPosition();

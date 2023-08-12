@@ -1,5 +1,5 @@
 <template>
-  <ion-page v-if="store">
+  <ion-page v-if="dstore">
     <ion-header mode="ios" class="bg-white">
       <gNav
         borderless
@@ -17,7 +17,7 @@
           ></ion-button>
         </ion-buttons>
         <div
-          class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+          class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform"
         >
           <ion-segment
             mode="ios"
@@ -57,10 +57,12 @@
         </ion-buttons>
       </gNav>
 
-      <div class="ion-padding flex flex-col gap-3 border-b border-outline mt-2">
+      <div
+        class="ion-padding mt-2 flex flex-col gap-3 border-b border-outline text-dark-400"
+      >
         <div class="flex items-center justify-between">
-          <span class="text-dark-400 text-2xl font-medium">
-            {{ store.name }}</span
+          <span class="text-2xl font-medium text-dark-400">
+            {{ dstore.name }}</span
           >
           <ion-icon
             :color="isFavourite ? 'secondary' : ''"
@@ -69,55 +71,56 @@
             :icon="isFavourite ? heart : heartOutline"
           />
         </div>
-
-        <div class="flex items-center gap-2 text-xs -mt-1">
-          <span class="font-medium">{{
-            store && store.rating && store.rating.rate
-          }}</span>
+        <div class="-mt-1 flex items-center gap-2 text-xs">
+          <span class="font-medium">
+            {{
+              dstore.location && dstore.location.city && dstore.location.city
+            }}
+            {{
+              dstore.location && dstore.location.state && dstore.location.state
+            }}
+          </span>
+          <span class="font-medium">{{ 4.5 }}</span>
           <ion-icon class="text-md" color="primary" :icon="star" />
-          <span
-            >{{ store && store.rating && store.rating.number }}+ Ratings</span
-          >
-          <gButton
+          <span>{{ 200 }}+ Ratings</span>
+          <!-- <gButton
             @click="moreInfoModal = true"
             size="small"
             fill="clear"
-            class="m-0 p-0 text-xs -ml-2 -mt-2 underline"
+            class="m-0 -ml-2 -mt-2 p-0 text-xs underline"
             >More Info</gButton
-          >
+          > -->
         </div>
 
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-2">
-            <div class="flex items-center gap-2">
+            <div v-if="false" class="flex items-center gap-2">
               <img src="@/assets/icon/naira-2.svg" alt="" />
               <div class="flex flex-col text-sm">
-                <span class="text-dark-400 font-medium">Free</span>
-                <span class="text-xs text-dark-200 -mt-1">Delivery</span>
+                <span class="font-medium text-dark-400">Free</span>
+                <span class="-mt-1 text-xs text-dark-200">Delivery</span>
               </div>
             </div>
             <div class="flex items-center gap-2">
               <img src="@/assets/icon/timer.svg" alt="" />
               <div class="flex flex-col text-sm">
-                <span class="text-dark-400 font-medium">25 - 30</span>
-                <span class="text-xs text-dark-200 -mt-1">Minutes</span>
+                <span class="font-medium text-dark-400">25 - 30</span>
+                <span class="-mt-1 text-xs text-dark-200">Minutes</span>
               </div>
             </div>
           </div>
 
-          <div class="text-error text-xs text-center">
+          <div class="text-center text-xs text-error">
             <ion-chip
               v-if="closed"
               color="danger"
               class="store border border-error"
             >
-              <ion-label class="flex flex-col text-left py-1 text-xs"
+              <ion-label class="flex flex-col py-1 text-left text-xs"
                 ><span class="font-medium">CLOSED</span>
                 <div>
                   Opens at
-                  <span class="font-medium"
-                    >{{ store.workingHours.opening }}AM</span
-                  >
+                  <span class="font-medium">{{ "6:00" }}AM</span>
                 </div>
               </ion-label>
             </ion-chip>
@@ -126,7 +129,7 @@
           </div>
         </div>
 
-        <div class="flex items-center gap-2">
+        <div v-if="false" class="flex items-center gap-2">
           <gButton
             appendIcon="people"
             iconColor="dark"
@@ -148,16 +151,17 @@
         </div>
 
         <div
-          class="animation flex items-center gap-1 text-xs mt-3 pb-1 -mb-1 overflow-x-auto no-scrollbar"
+          v-if="!loading"
+          class="animation no-scrollbar -mb-1 mt-3 flex items-center gap-1 overflow-x-auto pb-1 text-xs"
         >
           <div
             @click="selectMenu($event, i)"
             :class="
               activeMenu == i
-                ? 'bg-orange-50 text-primary border border-primary'
+                ? 'border border-primary bg-orange-50 text-primary'
                 : 'text-dark-300'
             "
-            class="px-3 py-1 rounded-full"
+            class="rounded-full px-3 py-1"
             v-for="(menu, i) in menus"
             :key="i"
           >
@@ -174,22 +178,25 @@
 
       <!--  Discount and Offers -->
       <div
-        v-if="store.discount"
-        class="flex items-center justify-center p-2 bg-primary-lighter border border-primary-light"
+        v-if="false"
+        class="flex items-center justify-center border border-primary-light bg-primary-lighter p-2"
       >
         <ion-button
           fill="clear"
-          class="relative animate__animated animate__rubberBand animate__delay-4s animate__infinite m-0"
+          class="animate__animated animate__rubberBand animate__delay-4s animate__infinite relative m-0"
         >
           <ion-icon color="primary" :icon="gift"></ion-icon>
           <div
-            class="absolute bg-secondary p-1 rounded-full -right-1 top-2 border-2 border-white"
+            class="absolute -right-1 top-2 rounded-full border-2 border-white bg-secondary p-1"
           ></div>
         </ion-button>
-        <span class="font-medium text-sm">
-          {{ store.discount.percent }}% off all menu items
-        </span>
+        <span class="text-sm font-medium"> {{ 20 }}% off all menu items </span>
       </div>
+
+      <div v-if="loading" class="p-4 text-center">
+        <ion-spinner name="lines" color="primary"></ion-spinner>
+      </div>
+
       <swiper
         :modules="modules"
         :autoplay="false"
@@ -197,7 +204,8 @@
         :zoom="true"
         @swiper="setSwiperInstance"
         @slideChange="onSlideChange"
-        class="mt-1 onboarding"
+        class="onboarding mt-1"
+        v-else
       >
         <swiper-slide v-for="(menu, i) in menus" :key="i">
           <div class="ion-padding flex flex-col gap-6">
@@ -206,12 +214,10 @@
         </swiper-slide>
       </swiper>
     </ion-content>
-
-    <MoreInfo :isOpen="moreInfoModal" @close="moreInfoModal = false" />
   </ion-page>
   <ion-page v-else>
     <ion-content class="ion-padding">
-      <div class="w-full h-full flex items-center justify-center">
+      <div class="flex h-full w-full items-center justify-center">
         <ion-spinner></ion-spinner>
       </div>
     </ion-content>
@@ -256,15 +262,16 @@ import { Swiper, SwiperSlide } from "swiper/vue";
 
 import storeDB from "@/utils/stores.js";
 import ProductCard from "@/components/Store/ProductCard.vue";
-import MoreInfo from "@/components/Store/MoreInfo.vue";
 
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, inject } from "vue";
 import { useRoute } from "vue-router";
+import { useDataStore } from "@/stores/data.js";
 import { helperFunctions } from "@/composable/helperFunctions";
 
 const { shareText, moveCenter } = helperFunctions;
-
+const store = useDataStore();
 const route = useRoute();
+const http = inject("http");
 
 const modules = [Autoplay, Keyboard, Pagination, Navigation, Scrollbar];
 const slides = ref();
@@ -277,27 +284,72 @@ const onSlideChange = (e) => {
   activeMenu.value = e.activeIndex;
 };
 
-const moreInfoModal = ref(false);
-const allStores = computed(() => storeDB);
-const store = ref(null);
+const loading = ref(false);
 const deliveryOption = ref("delivery");
+const allStores = computed(() => store.restaurants);
+const dstore = ref(null);
 
 const reload = async (event) => {
   setTimeout(() => event.target.complete(), 500);
 };
 
-onIonViewWillEnter(async () => {
-  const id = await route.params.id;
-  store.value = allStores.value.find((el) => el.id == id);
-
-  console.log(store.value, id);
-});
+// onIonViewWillEnter(async () => {
+//   initStore();
+// });
 
 onMounted(async () => {
-  const id = await route.params.id;
-  store.value = allStores.value.find((el) => el.id == id);
-  console.log(store.value, id);
+  initStore();
 });
+
+const initStore = async () => {
+  const id = await route.params.id;
+  dstore.value = allStores.value.find((el) => el.id == id);
+  console.log(dstore.value, id);
+
+  try {
+    loading.value = true;
+    await initCateogories();
+    await initProducts();
+  } catch (error) {
+    loading.value = false;
+  }
+};
+
+const initCateogories = async () => {
+  const id = await route.params.id;
+  try {
+    const res = await http({
+      endpoint: "GetCategories",
+      httpMethod: "get",
+      suffix: id, //restaurant Id
+    });
+
+    store.$patch({
+      categories: res,
+    });
+
+    console.log("Categories", res);
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+const initProducts = async () => {
+  try {
+    const res = await http({
+      endpoint: "GetProducts",
+      httpMethod: "get",
+      suffix: id, //restaurant Id
+    });
+
+    store.$patch({
+      products: res,
+    });
+
+    console.log("Products", res);
+  } catch (error) {
+    console.log(error.message);
+  }
+};
 
 const changeDeliveryOption = (e) => {
   deliveryOption.value = e.detail.value;
@@ -315,16 +367,16 @@ const shareStore = () => {
 const isFavourite = ref(false);
 const closed = computed(() => {
   let isClose = false;
-  const currentHour = new Date().getHours();
+  // const currentHour = new Date().getHours();
 
-  const openingHour = store.value && store.value.workingHours.opening;
-  const closingHour = store.value && store.value.workingHours.closing;
+  // const openingHour = store.value && store.value.workingHours.opening;
+  // const closingHour = store.value && store.value.workingHours.closing;
 
-  if (store.value && store.value.storeClosed) {
-    isClose = true;
-  } else if (currentHour >= closingHour || currentHour < openingHour) {
-    isClose = true;
-  }
+  // if (store.value && store.value.storeClosed) {
+  //   isClose = true;
+  // } else if (currentHour >= closingHour || currentHour < openingHour) {
+  //   isClose = true;
+  // }
   //   isClose = false;
 
   return isClose;

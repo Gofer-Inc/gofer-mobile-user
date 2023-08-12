@@ -61,7 +61,7 @@ const apiCall = function (url, httpMethod, body, additionalParams) {
   }
 }
 
-const http = async function ({endpoint, suffix, httpMethod, body = null, additionalParams = {}, extraHeaders = {}, storeKey }) {
+const http = async function ({endpoint, suffix, httpMethod, body = undefined, additionalParams = {}, extraHeaders = {}, storeKey }) {
 
 const store = useDataStore();
 let url = apis[endpoint]
@@ -97,4 +97,5 @@ export default {
       app.provide("http", http);
     }
 }
+
     
