@@ -92,10 +92,6 @@ if(suffix){
   }
 }
 
-export default {
-    install: (app) => {
-      app.provide("http", http);
-    }
-}
+export default http
 
     

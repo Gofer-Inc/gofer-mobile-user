@@ -14,13 +14,14 @@
 </template>
 
 <script setup>
-import storeDB from "@/utils/stores.js";
-
 import { computed } from "vue";
 
 import StoreCard from "@/components/Store/StoreCard.vue";
+import { useDataStore } from "@/stores/data.js";
 
-const featured = computed(() => storeDB.filter((el) => el.featured));
+const store = useDataStore();
+
+const featured = computed(() => store.restaurants.slice(2, 6));
 </script>
 
 <style></style>

@@ -24,7 +24,6 @@
 <script setup>
 // import { IonContent } from "@ionic/vue";
 import StoreCard from "@/components/Store/StoreCard.vue";
-import storeDB from "@/utils/stores.js";
 
 import { inject, computed } from "vue";
 import { useDataStore } from "@/stores/data.js";

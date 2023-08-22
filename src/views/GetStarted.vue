@@ -78,10 +78,10 @@ import deliveryLogo from "@/assets/icon/packageIcon.svg";
 
 import NearYou from "@/components/Store/NearYou.vue";
 
-import { ref, inject, computed } from "vue";
+import { ref, computed } from "vue";
 import { useDataStore } from "@/stores/data.js";
 
-const http = inject("http");
+import http from "@/service/https";
 const store = useDataStore();
 
 const loading = ref(false);
@@ -107,19 +107,9 @@ onIonViewWillEnter(async () => {
 });
 
 const initRestaurants = async () => {
+  console.log(store);
   loading.value = true;
-  try {
-    const res = await http({
-      endpoint: "GetRestaurants",
-      httpMethod: "get",
-    });
-    store.$patch({
-      restaurants: res,
-    });
-    console.log(res);
-    loading.value = false;
-  } catch (error) {
-    loading.value = false;
-  }
+  await store.setRestaurants();
+  loading.value = false;
 };
 </script>

@@ -1,5 +1,6 @@
 //store can be defined similar to the composition API setup, but it doesn't work as expected.
 import { defineStore } from "pinia";
+import http from "@/service/https";
 
 export const useDataStore = defineStore("main", {
   state: () => ({
@@ -51,17 +52,46 @@ export const useDataStore = defineStore("main", {
     },
 
     async setRestaurants(){
-      // console.log(this.$http)
-      // try {
-      //   const res = await this.$http({
-      //     endpoint: "GetRestaurants",
-      //     httpMethod: "get",
-      //   });
-      //     this.restaurants = res,
-      //     console.log(res);
-      // } catch (error) {
-      //   console.log(error.message)
-      // }
+      try {
+        const res = await http({
+          endpoint: "GetRestaurants",
+          httpMethod: "get",
+        });
+          this.restaurants = res,
+          console.log(res);
+      } catch (error) {
+        console.log(error.message)
+      }
+    },
+    async initCateogories (storeID) {
+      try {
+        const res = await http({
+          endpoint: "GetCategories",
+          httpMethod: "get",
+          suffix: storeID, //restaurant Id
+        });
+    
+          this.categories = res,
+    
+        console.log("Categories", res);
+      } catch (error) {
+        console.log(error.message);
+      }
+    },
+    async initProducts (storeID) {
+      try {
+        const res = await http({
+          endpoint: "GetProducts",
+          httpMethod: "get",
+          suffix: storeID, //restaurant Id
+        });
+    
+          this.products = res,
+   
+        console.log("Products", res);
+      } catch (error) {
+        console.log(error.message);
+      }
     }
  
   },

@@ -263,7 +263,7 @@ import { Swiper, SwiperSlide } from "swiper/vue";
 import storeDB from "@/utils/stores.js";
 import ProductCard from "@/components/Store/ProductCard.vue";
 
-import { computed, onMounted, ref, inject } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import { useDataStore } from "@/stores/data.js";
 import { helperFunctions } from "@/composable/helperFunctions";
@@ -271,7 +271,7 @@ import { helperFunctions } from "@/composable/helperFunctions";
 const { shareText, moveCenter } = helperFunctions;
 const store = useDataStore();
 const route = useRoute();
-const http = inject("http");
+import http from "@/service/https";
 
 const modules = [Autoplay, Keyboard, Pagination, Navigation, Scrollbar];
 const slides = ref();
@@ -293,9 +293,9 @@ const reload = async (event) => {
   setTimeout(() => event.target.complete(), 500);
 };
 
-// onIonViewWillEnter(async () => {
-//   initStore();
-// });
+onIonViewWillEnter(async () => {
+  initStore();
+});
 
 onMounted(async () => {
   initStore();
@@ -308,46 +308,11 @@ const initStore = async () => {
 
   try {
     loading.value = true;
-    await initCateogories();
-    await initProducts();
+    await store.initCateogories(id);
+    await store.initProducts(id);
+    loading.value = false;
   } catch (error) {
     loading.value = false;
-  }
-};
-
-const initCateogories = async () => {
-  const id = await route.params.id;
-  try {
-    const res = await http({
-      endpoint: "GetCategories",
-      httpMethod: "get",
-      suffix: id, //restaurant Id
-    });
-
-    store.$patch({
-      categories: res,
-    });
-
-    console.log("Categories", res);
-  } catch (error) {
-    console.log(error.message);
-  }
-};
-const initProducts = async () => {
-  try {
-    const res = await http({
-      endpoint: "GetProducts",
-      httpMethod: "get",
-      suffix: id, //restaurant Id
-    });
-
-    store.$patch({
-      products: res,
-    });
-
-    console.log("Products", res);
-  } catch (error) {
-    console.log(error.message);
   }
 };
 
